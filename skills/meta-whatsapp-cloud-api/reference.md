@@ -7,7 +7,7 @@ last walk date in SKILL.md" — Meta's policies and consoles both move.
 
 | Reason | Usual fix |
 | --- | --- |
-| Legal name mismatch (the most common reason) | Copy the name verbatim from the document into Business info — suffix and punctuation included |
+| Legal name mismatch (most common, 2026 field reports) | Copy the name verbatim from the document into Business info — suffix and punctuation included |
 | Address mismatch | Match the document string exactly: city spelling, street number, unit, postal code |
 | Phone mismatch, or a personal phone used as the business phone | A business phone in international format, matching the documents |
 | Website fails to load, isn't HTTPS, is a dead link, or doesn't show the business name on the homepage | Fix the site first, then submit; a domain with some age behind it also fares better |
@@ -23,10 +23,9 @@ last walk date in SKILL.md" — Meta's policies and consoles both move.
 | Account history (prior policy strikes, a restricted ad account) | Clear the underlying restriction first |
 | A sensitive category (finance, health, gambling, alcohol) | Extra documentation is likely required; pick a more neutral, still-honest category if one genuinely applies |
 
-An appeal/review-request option, where offered, generally takes a few
-business days and tends to succeed more often than a third blind
-resubmission — but it isn't always offered; sometimes the only path after
-a rejection is a fresh submission with the actual problem fixed.
+An appeal or review-request option is sometimes offered after a
+rejection and sometimes absent entirely. When it is absent, the only
+route is a corrected resubmission with the actual problem fixed.
 
 ## Accepted document types, worked through one jurisdiction (Israel)
 
@@ -76,13 +75,14 @@ separate documents.
 
 A business portfolio can own one or more WhatsApp Business Accounts
 (WABAs). A WABA belongs to exactly one portfolio and cannot be
-transferred to a different one. Each WABA holds a limited number of
-phone numbers (a small fixed cap when unverified, a much larger one once
-the portfolio is verified). An app — created with a WhatsApp-focused use
-case — is attached to the portfolio and calls the Graph API using a
-system-user token scoped to that WABA. Messaging limits apply at the
-portfolio level, shared across every number in it, not per individual
-number.
+transferred to a different one. The number of phone numbers that can be
+registered is capped per business portfolio, not per WABA — a small
+fixed cap when the portfolio is unverified, a much larger one once it's
+verified — and that cap is shared across every WABA the portfolio owns.
+An app — created with a WhatsApp-focused use case — is attached to the
+portfolio and calls the Graph API using a system-user token scoped to a
+specific WABA. Messaging limits likewise apply at the portfolio level,
+shared across every number in it, not per individual number.
 
 The identifiers an integration needs in its own configuration: the app
 ID, the app secret (used to validate webhook signatures), the WABA ID,

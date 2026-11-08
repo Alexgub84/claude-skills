@@ -197,7 +197,9 @@ noticing has cost real submissions a full review cycle.
 Every step below works on an unverified portfolio — verification only
 changes the messaging-volume ceiling, not whether the API itself works.
 Bring the two up in parallel rather than waiting for one before starting
-the other.
+the other. A business portfolio must already exist (created at
+business.facebook.com) before step 1 — the step below attaches a new app
+to that existing portfolio, it does not create one.
 
 1. **Create the app.** In the developer console, create an app using the
    WhatsApp-focused use case ("connect with customers through WhatsApp,"
@@ -280,7 +282,7 @@ down.
 
 Before troubleshooting anything about a message that seems to have gone
 nowhere, confirm the destination app is actually published (step 8
-above) — an unpublished app is the single most common reason messages
+above) — an unpublished app is the first thing to check when messages
 appear to succeed but never arrive, and it produces no error anywhere.
 
 Moving an already-registered number from a shared WABA onto its own,
@@ -295,7 +297,7 @@ time.
 
 | Thing | Unverified portfolio | After verification |
 | --- | --- | --- |
-| Business-initiated conversations / 24h | A few hundred unique contacts, shared across the whole portfolio | Roughly 10x higher immediately, then stepping up further by usage and quality |
+| Business-initiated conversations / 24h | 250 unique contacts, shared across the whole portfolio | 1,000 immediately, then stepping up further by usage and quality |
 | Registered phone numbers | A small fixed cap per portfolio | A much higher cap per portfolio |
 | Display name | Accepted but shown small, no formal review | Reviewed, shown normally in chats |
 | Replies inside the 24h customer window | Unlimited, free-form, doesn't count against any limit | Same |

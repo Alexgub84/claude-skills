@@ -41,11 +41,11 @@ Do these in order; each one unblocks the next.
 1. **Developer accounts exist and are verified.** The app should be
    published from the account that actually owns the product — the
    publisher of record, not a shared or agency account used across
-   unrelated apps. Apple in particular rejects apps from an account that
-   holds many unrelated products (guideline 4.2.6, "apps created from a
-   commercialized template or app generation service") and guideline
-   5.2.1 expects the IP owner to be the one submitting. See §6 for the
-   individual-vs-organization decision.
+   unrelated apps. Apple in particular rejects apps that look like they
+   came from a commercialized template or app-generation service when
+   submitted under an account that holds many unrelated products, and
+   separately (guideline 5.2.1) expects the IP owner to be the one
+   submitting. See §6 for the individual-vs-organization decision.
 2. **Legal pages live on the production domain**: a privacy policy, terms
    of use, and an account-deletion page if the app allows sign-up. Both
    stores ask for these URLs; Google's Data safety form links the
@@ -114,10 +114,11 @@ after the fact.
   upload), with a build number (`versionCode` or equivalent) strictly
   higher than the last one shipped. Check the package name embedded in
   the bundle matches the one the target Play account owns before
-  uploading — a mismatched package name fails at the upload step, or
-  worse, silently creates a second listing.
+  uploading — a mismatched package name fails at the upload step.
 - **iOS**: archive and export (or upload directly to App Store Connect
-  from the archive step) with a build number strictly higher than the
+  from the archive step), signed under the right Apple Developer Program
+  membership (the "team" the app's certificates and the app record both
+  belong to), with a build number strictly higher than the
   last one shipped, and the exact bundle identifier the App Store Connect
   record was created with. Automatic signing under the right team avoids
   most certificate problems.
@@ -287,8 +288,8 @@ submission is never a reason testers have to wait either.
   the target account — but that means a fresh listing from scratch,
   every declaration redone, and existing users having to reinstall
   side-by-side rather than getting an in-place update. Check nothing
-  else (deep links, backend config, associated domains) depends on the
-  old package name before doing this.
+  else (deep links, backend config, the `assetlinks.json` digital asset
+  links file) depends on the old package name before doing this.
 - Never leave two accounts holding live listings of the same product for
   long — retire the old one once the new one is confirmed working in
   production.

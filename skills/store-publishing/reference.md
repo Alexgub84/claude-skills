@@ -78,9 +78,9 @@ Developer account, not a shared account used across many unrelated apps.
 ### The account question
 
 Apple expects the app to be submitted by the entity that owns its
-intellectual property (guideline 5.2.1), and rejects apps that look like
-they came from a template/generation service submitted under an
-unrelated developer account (guideline 4.2.6). There is no "exempt
+intellectual property (guideline 5.2.1), and separately rejects apps
+that look like they came from a template or app-generation service when
+submitted under an unrelated developer account. There is no "exempt
 organization account" equivalent to Google's D-U-N-S exemption here —
 every Apple Developer Program membership, Individual or Organization,
 is expected to belong to (or have clear written authorization from) the
