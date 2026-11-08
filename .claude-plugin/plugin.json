@@ -1,0 +1,21 @@
+{
+  "name": "claude-skills",
+  "displayName": "Store Publishing & Meta WhatsApp Cloud API",
+  "version": "0.1.0",
+  "description": "Two installable procedures: get an app into Google Play and the Apple App Store, and get a business verified with Meta and connected to the official WhatsApp Cloud API.",
+  "author": {
+    "name": "Hand in Hand AI",
+    "url": "https://handinhandai.com"
+  },
+  "homepage": "https://handinhandai.com",
+  "repository": "https://github.com/Alexgub84/claude-skills",
+  "license": "MIT",
+  "keywords": [
+    "google-play",
+    "app-store",
+    "mobile-release",
+    "meta",
+    "whatsapp-cloud-api",
+    "business-verification"
+  ]
+}

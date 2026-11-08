@@ -1,0 +1,14 @@
+{
+  "name": "claude-skills",
+  "owner": {
+    "name": "Hand in Hand AI",
+    "url": "https://handinhandai.com"
+  },
+  "plugins": [
+    {
+      "name": "claude-skills",
+      "source": "./",
+      "description": "Store publishing (Google Play + Apple App Store) and Meta WhatsApp Cloud API setup, as two installable Claude Code skills."
+    }
+  ]
+}
