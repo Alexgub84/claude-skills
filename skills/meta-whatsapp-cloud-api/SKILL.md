@@ -52,6 +52,55 @@ PR with the correction if you find one.
 
 ## 1. Business verification
 
+### What verification is, and isn't
+
+Business verification in Meta Business Suite is a different thing from the
+paid Meta Verified subscription, and it does not produce a verified badge.
+Meta states this directly: "Verifying your business in Meta Business Suite
+is different from Meta Verified for businesses and won't give you a
+verified badge." (Meta Business Help Center, "How to verify your business
+in Meta Business Suite",
+https://www.facebook.com/business/help/2058515294227817, read 2026-11-09 —
+the same sentence is restated at
+https://www.facebook.com/business/help/2342133782492969, read 2026-11-09).
+The verified badge is specifically a Meta Verified benefit: "Meta Verified
+for businesses is a paid subscription that provides tools to help you build
+more confidence with new audiences and protect your brand. This
+subscription comes with benefits like the verified badge, enhanced support,
+impersonation protection, and more."
+(https://www.facebook.com/business/help/308979828303560, read 2026-11-09).
+Meta Verified is billed on a recurring basis and is a separate purchase
+from the free verification procedure this skill covers.
+
+What business verification actually unlocks, in Meta's own words: "Business
+verification is required to access certain advertising, developer, billing
+and spending features."
+(https://www.facebook.com/business/help/2058515294227817, read 2026-11-09).
+Spelled out further on
+https://www.facebook.com/business/help/1095661473946872 (read 2026-11-09):
+the daily spending limit, eligible developer features, Meta Business
+Partners access, the News Page index, the WhatsApp Business Platform, Page
+transparency, agencies based in China, and financial-services advertiser
+status. For the WhatsApp Business Platform specifically, the same page
+says: "Businesses using the WhatsApp Business Platform may need to complete
+verification to access certain features." On the developer side: "Advanced
+Access now requires Business Verification... Apps that request advanced
+access for permissions and apps that allow other Businesses to access
+their own data must be connected to a Business that has completed Business
+Verification."
+(https://developers.facebook.com/docs/development/release/business-verification/,
+read 2026-11-09).
+
+Checked and not found on any of the pages above, or on Meta's account-
+scaling page for WhatsApp
+(https://www.facebook.com/business/help/595597942906808, read 2026-11-09):
+any statement from Meta about how many times to resubmit before stopping,
+or advice to fix documents at the root rather than resubmit again. That
+advice is common on third-party agency blogs but Meta does not say it
+anywhere checked for this skill, so it isn't repeated here as fact. The
+"Never" list below sticks to what Meta's own pages do support: a timing
+rule, not a count.
+
 ### Picking the right document set
 
 Meta's own accepted-document categories (read directly off its "Details &
