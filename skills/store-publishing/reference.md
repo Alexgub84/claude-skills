@@ -12,7 +12,12 @@ The app should be published from the account that actually owns the
 product — typically the developer's or the business's own Google Play
 Developer account, not a shared account used across many unrelated apps.
 
-- A brand-new account pays Google's one-time registration fee directly.
+- A brand-new account pays Google's one-time registration fee directly —
+  US$25, not recurring. Stated as "US$25" (the dollar sign, not a generic
+  currency symbol) on Google's own page; it doesn't say whether a reader
+  outside the US sees a different currency or a tax line at checkout.
+  (support.google.com/googleplay/android-developer/answer/6112435, the
+  "Pay the registration fee" step — read 2026-11-09)
 - A **personal** account created after the policy cutoff (13 November
   2023 at time of writing) must complete a closed test with a minimum
   tester count (12, at time of writing) over a minimum number of
@@ -86,10 +91,22 @@ every Apple Developer Program membership, Individual or Organization,
 is expected to belong to (or have clear written authorization from) the
 app's actual owner.
 
-- Registering as an Individual costs a fixed annual fee, paid directly
-  by the account holder, with two-factor authentication required on the
-  Apple ID. Apple's own approval of a brand-new account typically takes
-  a few days.
+- Registering as an Individual (or an Organization — same program, same
+  price) costs a fixed 99 USD annual fee, paid directly by the account
+  holder, with two-factor authentication required on the Apple ID.
+  Apple's own enrollment page states the price as "99 USD per membership
+  year" and separately says "Prices may vary by region and are listed in
+  local currency during the enrollment process" — so an Israeli reader
+  should expect the actual checkout price to appear in local currency,
+  not necessarily USD; the page says nothing about a separate tax line.
+  (developer.apple.com/programs/enroll/, "Terms and payment" — read
+  2026-11-09). A fee waiver exists, but only for a nonprofit
+  organization, an accredited educational institution, or a government
+  entity — Apple's own waiver page explicitly excludes an individual,
+  sole proprietor, or single-person business from eligibility.
+  (developer.apple.com/help/account/membership/fee-waivers/ — read
+  2026-11-09). Apple's own approval of a brand-new account typically
+  takes a few days.
 - Anyone doing console work on someone else's behalf needs an invite into
   **App Store Connect → Users and Access** with the narrowest role that
   covers the work (Admin or App Manager, depending on what's needed) —
