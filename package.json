@@ -1,0 +1,12 @@
+{
+  "name": "claude-skills-tools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "package": "node scripts/package.mjs"
+  },
+  "dependencies": {
+    "yaml": "2.9.1"
+  }
+}

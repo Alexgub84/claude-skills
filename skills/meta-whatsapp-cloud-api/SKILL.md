@@ -13,6 +13,9 @@ description: >-
   not for moving a number between WhatsApp Business Accounts once a
   portfolio is already verified and live — that's a narrower, separate
   procedure.
+metadata:
+  version: "1.0.0"
+  last-walked: "2026-11-08"
 ---
 
 # meta-whatsapp-cloud-api

@@ -14,6 +14,20 @@ console and a note that consoles change — if a step doesn't match what
 you see, [open an issue](https://github.com/Alexgub84/claude-skills/issues)
 in this repo.
 
+## Download
+
+No GitHub account, terminal or Claude Code needed. Each skill is also a
+downloadable ZIP, built by this repo's own release workflow from the
+`skills/<name>/` folder at every tagged release — nobody edits these by hand:
+
+- [store-publishing.zip](https://github.com/Alexgub84/claude-skills/releases/latest/download/store-publishing.zip)
+- [meta-whatsapp-cloud-api.zip](https://github.com/Alexgub84/claude-skills/releases/latest/download/meta-whatsapp-cloud-api.zip)
+
+The downloaded file uploads as is in Claude's **Customize → Skills → Upload a
+skill**. An installed copy does not update itself — it stays exactly as it
+was the day you uploaded it, so come back to this link for a newer version
+rather than assuming it is current.
+
 ## Install
 
 In Claude Code:
@@ -38,6 +52,13 @@ Then install either or both skills from the marketplace it adds.
   carries the rejection-reason table, token types, display-name rules,
   the messaging-limit ladder, the webhook payload contract, and the
   verification wizard walked screen by screen.
+
+Both skills are valid against the open [Agent Skills
+specification](https://agentskills.io/specification) (read live on
+2026-11-10). The version and the date each skill was last walked against
+the real console live in that spec's optional `metadata` field — a map of
+extra key/value data the spec reserves for exactly this, rather than a
+frontmatter key the spec doesn't define.
 
 ## License
 

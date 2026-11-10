@@ -11,6 +11,9 @@ description: >-
   "Play Console", "App Store Connect", "AAB", "IPA", "app transfer",
   "package name", "bundle id". Do not trigger for backend deploys or web
   hosting — this is about the two app stores only.
+metadata:
+  version: "1.0.0"
+  last-walked: "2026-11-08"
 ---
 
 # store-publishing
