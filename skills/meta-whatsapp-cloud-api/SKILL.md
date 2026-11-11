@@ -23,6 +23,15 @@ metadata:
 
 # meta-whatsapp-cloud-api
 
+This skill takes a Meta business portfolio from whatever state its
+verification is actually in to a verified portfolio and a working
+WhatsApp Cloud API — app, WABA, real phone number, webhook, and a first
+delivered template message. It starts by finding which of four states
+the account's verification is actually in, rather than assuming a
+rejection is already in hand. When a browser-automation tool is
+connected it drives the console itself; otherwise it narrates each
+screen for a human to click, one at a time.
+
 This procedure was last walked against the real Meta Business Suite and
 developer console on 2026-11-08. Meta changes these screens, field names
 and wizard flows often and without notice — if a step below doesn't match
