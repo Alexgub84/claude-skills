@@ -43,9 +43,13 @@ route for almost everything below the listing itself; see
 - App Store Connect → Apps → "+ New App": platform, name, primary
   language, bundle ID (registered separately first under Certificates,
   Identifiers & Profiles), SKU. — *agent*
-- The bundle ID locks the moment any build is uploaded against it — even
-  a build that's never published — so confirm it's the right one before
-  the very first archive, not after.
+- **The bundle ID locks the moment a build is uploaded against it.**
+  Apple's own App Information reference states it as a property rule:
+  "You can't change this property after you upload a build"
+  (https://developer.apple.com/help/app-store-connect/reference/app-information/app-information/
+  — read 2026-11-11). That sentence isn't conditioned on the build ever
+  being published, so confirm the bundle ID is the right one before the
+  very first archive, not after.
 
 ## The version page
 
@@ -112,11 +116,19 @@ the iPad slot are drop zones only, with no file input behind them
 ## Submitting
 
 - "Add for Review" assembles the submission. — *agent*
-- **"Submit for Review" is one of the two irreversible presses this
-  skill never takes on its own.** State exactly what the press does
-  (sends this version to App Review) and click only after the person
-  confirms in that same turn, in either browser mode. — *agent to click,
-  only after explicit confirmation*
+- **"Submit for Review"** — one of the four presses `SKILL.md`'s "Never"
+  section pauses for; see that section for the single statement of the
+  rule. State exactly what the press does (sends this version to App
+  Review) and click only after the person confirms in that same turn, in
+  either browser mode. — *agent to click, only after explicit
+  confirmation*
+- **After approval, under manual release: "Release this version."** The
+  version sits in "Pending Developer Release" (see
+  `states-and-detection.md` for why that's approved, not live) until this
+  is pressed. Same rule as "Submit for Review," above — state what the
+  press does (makes this version live on the App Store) and click only
+  after the person confirms in that same turn. — *agent to click, only
+  after explicit confirmation*
 
 ## Two traps that cost real time
 

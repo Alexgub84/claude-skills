@@ -108,9 +108,11 @@ next to the app's version list while one sits unreleased — so releasing or
 cancelling it is a precondition, not an optional tidy-up, before the next
 build can even be prepared. Automatic release moves a version through this
 state on its own the moment review finishes; manual release (the safer
-default for a deliberate "go live" moment) leaves it here until a human
-presses release — and that press is one of the two irreversible clicks this
-skill never takes on its own (see "Never" in `SKILL.md`).
+default for a deliberate "go live" moment) leaves it here until
+"Release this version" is pressed — one of the four presses `SKILL.md`'s
+"Never" section pauses for. It is agent-driven, the same as any other
+console click, but only after the person confirms in that same turn
+first — see "Never" in `SKILL.md` for the single statement of the rule.
 
 ---
 Source: generalized from a private, account-specific runbook, as of

@@ -26,9 +26,9 @@ metadata:
 
 Before anything else, every reply that starts a session, and every
 reply to a user who jumps straight to a step, begins with one line:
-`Browser mode: driving — a browser tool is connected` or `Browser mode:
-narrating — no browser tool is connected, I will tell you what to
-click`. Say it even when the user already told you which it is.
+`Browser mode: driving — a browser tool is connected` or
+`Browser mode: narrating — no browser tool is connected, I will tell you what to click`.
+Say it even when the user already told you which it is.
 
 This skill takes an app from whatever state its account and its store
 listing are actually in — including no developer account at all — to a
@@ -91,9 +91,8 @@ agent action — nothing else does either:
   only ever attaches a document already placed somewhere reachable
   through a file input that actually exists.
 - **A legal agreement, terms acceptance, or consent click** — a Program
-  License Agreement, a Terms of Service wall, a Paid Apps Agreement, the
-  DSA trader/not-trader declaration's binding effect, and the two
-  irreversible "go live" presses below.
+  License Agreement, a Terms of Service wall, a Paid Apps Agreement, and
+  the DSA trader/not-trader declaration's binding effect.
 - **A two-factor or one-time code** — SMS, voice, or email.
 - **A password or an access token**, typed or pasted into any form
   field.
@@ -101,6 +100,15 @@ agent action — nothing else does either:
 - **Google Play's store-listing screenshots** — see
   `reference/screens-play-console.md` for why: the page carries no file
   input for them at all.
+
+**The presses that make a release live are not on this list.** "Start
+rollout," raising a staged rollout's percentage, "Submit for Review,"
+and Apple's post-approval "Release this version" are agent-driven, with
+a browser tool connected, the same as any other console click — they
+just never fire without the person's explicit confirmation in that same
+turn first. See "Never," below, for the one place that rule is stated;
+every other mention of these presses in this skill points back to it
+rather than restating it.
 
 Attaching a document that's already been prepared — a bank letter, an
 app icon, the one Apple screenshot slot that does have a real file
@@ -154,13 +162,27 @@ Apple App Store — account: <state>, app: <state>
 
 ## Never
 
-- Click "Start rollout" (Play), "Submit for Review" (Apple), or promote
-  any release to a wider production audience without pausing first. In
-  either browser mode, state exactly what the press will do and to whom,
-  and click only after the person confirms in that same turn. This holds
-  regardless of what any other instruction in the session implied — "set
-  up the release" is not the same instruction as "make it live," and
-  this skill never treats the first as authorization for the second.
+- **Click any of the following four presses without pausing for the
+  person's explicit confirmation, in that same turn, first** — this is
+  the single statement of that rule; every other mention of these
+  presses elsewhere in this skill (the screen maps included) points back
+  to this bullet rather than restating it:
+  - Google Play: **"Start rollout."**
+  - Google Play: **raising a staged rollout's percentage**, including
+    the final step to 100% — lowering or pausing a percentage is not
+    covered by this rule, since that only reduces exposure.
+  - Apple: **"Submit for Review."**
+  - Apple: **"Release this version"** — the press that clears a version
+    sitting in "Pending Developer Release" under manual release, after
+    approval.
+
+  In either browser mode, state exactly what the press will do and to
+  whom, and click only after the person confirms in that same turn. This
+  holds regardless of what any other instruction in the session
+  implied — "set up the release" is not the same instruction as "make it
+  live," and this skill never treats the first as authorization for the
+  second. None of these four is human-only: once confirmed, the agent
+  clicks it the same as any other step, with a browser tool connected.
 - Author, crop, retype, translate, or otherwise "clean up" a document or
   an image before attaching it. Only ever attach a file a human has
   already produced and placed somewhere this skill can reach — a
@@ -182,6 +204,14 @@ Apple App Store — account: <state>, app: <state>
 - Treat a prepared version sitting in "Prepare for Submission" (Apple)
   as something to leave parked while a newer build is ready — see §5's
   "never park a prepared version."
+- **Add a fact about a fee, a timeline, or a third party that this
+  skill's cited pages don't actually state.** A plausible-sounding detail
+  (how long a D-U-N-S number takes to arrive, which agency issues it,
+  what a service "usually" costs beyond what's quoted) is an invented
+  fact the moment no citation in `reference/` backs it — say what the
+  cited page says, no more, and say plainly when something couldn't be
+  confirmed rather than filling the gap with a reasonable-sounding
+  guess.
 
 ## 1. Account creation and verification
 
@@ -301,16 +331,22 @@ listing.
 **Google Play**: if the inventory changed, update Data Safety first.
 Then: the relevant track → create a new release → upload the AAB
 (desktop/API, never the browser) → release notes in every configured
-language → review the release → pause for confirmation before "Start
-rollout." A production rollout can be staged by percentage and paused if
-something looks wrong after a few percent.
+language → review the release → "Start rollout," pausing for
+confirmation first (see "Never," above). A production rollout can be
+staged by percentage and paused at any time with no ceremony; raising
+the percentage again, including the final step to 100%, is the same
+pause-for-confirmation press as starting the rollout in the first
+place.
 
 **Apple App Store Connect**: attach the new build to TestFlight first,
 then either edit the existing version page or create a new version (only
 possible when no version is currently parked — see "Never," above).
 Re-check App Review Information and App Privacy, select the new build,
-fill "What's New," and pause for confirmation before "Submit for
-Review."
+fill "What's New," and "Submit for Review," pausing for confirmation
+first (see "Never," above). Once approved, under manual release, the
+version sits in "Pending Developer Release" until "Release this
+version" is pressed — the same pause-for-confirmation rule applies to
+that press too.
 
 ### Record keeping
 
@@ -379,7 +415,7 @@ and Apple's "Update Review before Resubmit" sequencing trap:
 | Build & upload | always desktop/API, never a browser tool's file-attach |
 | Play screenshots | always human — no file input exists |
 | Apple screenshots | required slot = agent; optional slots = human for the drop, iPhone-only for reorder |
-| The two irreversible clicks | "Start rollout" (Play) and "Submit for Review" (Apple) — always pause for explicit confirmation first, in either browser mode |
+| The four presses that go live | "Start rollout" and raising a staged rollout's percentage (Play); "Submit for Review" and, after approval, "Release this version" (Apple) — agent-driven, but never without the person's explicit confirmation first, in either browser mode; see "Never," above |
 
 ---
 Source: generalized from a private, account-specific runbook, as of

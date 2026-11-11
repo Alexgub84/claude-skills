@@ -65,7 +65,18 @@ accepting it.
 ## Creating the app
 
 - Console → "Create app": app name, default language, app or game, free
-  or paid, both required declarations. — *agent*
+  or paid, both required declarations, and the **package name** — set
+  once, here. Play Console's own help states it plainly: "Package names
+  for app files are unique and permanent, so name them carefully.
+  Package names can't be deleted or re-used."
+  (https://support.google.com/googleplay/android-developer/answer/9859152
+  — read 2026-11-11). Android's own build documentation adds the same
+  rule from the binary's side: "Once you publish your app, you should
+  never change the application ID. If you change the application ID,
+  Google Play Store treats the upload as a completely different app."
+  (https://developer.android.com/build/configure-app-module — read
+  2026-11-11). Confirm the package name is right before this step, not
+  after. — *agent*
 - Dashboard → "Set up your app" checklist, top to bottom: privacy policy
   URL, App access, ads declaration, content rating questionnaire, target
   audience and age, government-apps declaration, financial-features
@@ -79,8 +90,8 @@ accepting it.
 Enroll so Google holds the app signing key and the upload key stays
 replaceable if it's ever lost. A one-time, reversible-consequence
 checkbox/agreement click on the account's own signing setup — not one of
-the two irreversible "go live" presses this skill always pauses for, but
-still worth doing deliberately rather than by habit. — *agent*
+the presses `SKILL.md`'s "Never" section pauses for, but still worth
+doing deliberately rather than by habit. — *agent*
 
 ## Store listing
 
@@ -115,15 +126,20 @@ still worth doing deliberately rather than by habit. — *agent*
 - App content declarations, re-checked against the current data
   inventory if it changed since the last release. — *agent*
 - "Review release" — reading the summary before the next click. — *agent*
-- **"Start rollout" is one of the two irreversible presses this skill
-  never takes on its own.** State exactly what the press will do (move
-  this release live to some or all of the track's users) and to whom, and
-  click it only after the person confirms in that same turn — in either
-  browser mode. — *agent to click, only after explicit confirmation*
-- A production rollout can be staged by percentage and paused if
-  something looks wrong after a few percent — pausing a staged rollout is
-  not itself an irreversible press and doesn't need the same pause-and-
-  confirm ceremony as starting it.
+- **"Start rollout"** — one of the four presses `SKILL.md`'s "Never"
+  section pauses for; see that section for the single statement of the
+  rule. State exactly what the press will do (move this release live to
+  some or all of the track's users) and to whom, and click it only after
+  the person confirms in that same turn — in either browser mode. —
+  *agent to click, only after explicit confirmation*
+- A production rollout can be **staged by percentage**. Lowering the
+  percentage, or pausing it, is not covered by the pause rule — that
+  only reduces exposure, never increases it. **Raising the percentage —
+  including the final step to 100% — is the same pause-for-confirmation
+  press as starting the rollout in the first place**, named in
+  `SKILL.md`'s "Never" section: state what the new percentage reaches
+  and confirm before clicking, every increase. — *agent to click, only
+  after explicit confirmation, every increase*
 
 ## General console mechanics worth expecting
 

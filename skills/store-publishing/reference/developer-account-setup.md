@@ -49,17 +49,31 @@ mention at all.
 
 ### What to do, in order
 
+The closed-testing gate below needs an actual app record and an
+uploaded release to run a test against — it cannot happen before state 3
+(account ready, no app record) even exists, let alone before an app has
+climbed to state 4 or 5. Account verification and app creation are not
+interchangeable steps; the gate sits after both.
+
 1. Register the account (personal or organisation) and pay the fee —
    *human*, it's a payment.
 2. Complete developer identity verification for the account type —
    *human* for the identity document itself and any human-review step
    the console gates behind a person; *agent* for filling form fields and
    attaching an already-prepared document to a found file input.
-3. If a personal account: expect the closed-testing gate before
-   production access. Setting up the closed test (track, tester list,
-   release) is agent-drivable; clearing 14 continuous days is a matter of
-   time, not a click.
-4. Only then does state 3 (account ready, no app record) begin.
+3. The account is verified — state 3 begins. Create the app record (see
+   `screens-play-console.md`), then walk it through to a build uploaded
+   for testing (states 4 and 5 in `states-and-detection.md`).
+4. **If a personal account**: open a closed test on that app, with the
+   minimum tester count opted in continuously for the required number of
+   days before production access is granted
+   (https://support.google.com/googleplay/android-developer/answer/14151465
+   — read 2026-11-11, cited above). Setting up the track, the tester list
+   and the release is agent-drivable; clearing the continuous-days
+   requirement is a matter of time, not a click.
+5. Once the gate clears, apply for production access for that app — a
+   one-time condition per Google's own wording, not a per-release
+   requirement.
 
 ## Apple App Store
 
@@ -72,7 +86,8 @@ mention at all.
   to be a real legal entity (no DBAs, fictitious businesses, trade names,
   or branches), **a D-U-N-S number** ("so that we can verify your
   organization's identity and legal entity status" — not required for
-  government organisations), legal authority to bind the organisation to
+  government organisations; Apple's own page adds that requesting one is
+  "free in most jurisdictions"), legal authority to bind the organisation to
   agreements, a work email on the organisation's own domain, and a
   working website on that domain. Enrollment is reviewed by Apple before
   it activates — not immediate the way Individual is.
@@ -118,8 +133,9 @@ developer-account identity and tier are unaffected either way.
    address entered above. Only a human can read and enter those codes —
    this skill never sees them. — *human* for the codes; the decision to
    press "Next" and start that process at all should be confirmed in the
-   same turn it's taken, the same discipline as the two irreversible
-   "go live" presses this skill always pauses for.
+   same turn it's taken — the same discipline as the four presses named
+   in `SKILL.md`'s "Never" section, even though this particular "Next"
+   isn't one of those four itself.
 4. After both codes are confirmed, the Business page's compliance banner
    clears and the contact block shows as verified.
 
