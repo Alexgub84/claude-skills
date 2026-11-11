@@ -246,4 +246,4 @@ shape has been stable:
     guidance on not touching a pending submission.
 
 ---
-Source: meta-business-setup (SKILL.md + reference.md), as of 2026-11-08.
+Last reviewed: 2026-11-08.
