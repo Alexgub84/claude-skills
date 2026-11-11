@@ -45,13 +45,21 @@ Then install either or both skills from the marketplace it adds.
   package/bundle id rules), the repeat-release checklist, and rejection
   handling. `reference.md` carries the longer per-store detail and the
   pre-submission readiness checklist.
-- `skills/meta-whatsapp-cloud-api/SKILL.md` — business-verification
-  document requirements and the resubmission process, then bringing up
-  the Cloud API itself in order: app, WABA, test number, system-user
-  token, real phone number, webhook, smoke test, templates. `reference.md`
-  carries the rejection-reason table, token types, display-name rules,
-  the messaging-limit ladder, the webhook payload contract, and the
-  verification wizard walked screen by screen.
+- `skills/meta-whatsapp-cloud-api/SKILL.md` — first checks which of four
+  states an account's verification is actually in (never started /
+  submitted and waiting / rejected with a reason / verified) from the
+  Graph API field plus the console, then the matching document
+  requirements and resubmission process, then bringing up the Cloud API
+  itself in order: app, WABA, test number, system-user token, real phone
+  number, webhook, smoke test, templates. With a browser-automation tool
+  connected it drives the console screens directly; otherwise it
+  narrates each screen for a human to click. Its `reference/` folder
+  carries the rejection-reason table and Israeli document worked example
+  (`rejection-reasons.md`), the business-verification wizard walked
+  screen by screen (`screens-business-verification.md`), the developer-
+  console mechanics for the app/WABA/token/webhook/template steps
+  (`screens-developer-console.md`), and the underlying Graph API calls
+  with example `curl` commands (`api-checks.md`).
 
 Both skills are valid against the open [Agent Skills
 specification](https://agentskills.io/specification) (read live on

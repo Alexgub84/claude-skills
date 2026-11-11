@@ -2,29 +2,130 @@
 name: meta-whatsapp-cloud-api
 description: >-
   Get a Meta business portfolio verified and the official WhatsApp Cloud
-  API (not a third-party reseller API) wired up end to end: diagnose a
-  rejected business verification, prepare a resubmission with the right
-  document types, and bring up the Cloud API itself — app, WABA, test
-  number, system-user token, real phone number, webhook, smoke test,
-  templates. Use when working on Meta business verification, a rejected
-  or stalled verification, the WhatsApp Cloud API, a Meta developer app,
-  a WABA, a system user token, or connecting a product to the official
-  WhatsApp Business Platform. Not for Meta's own paid support tiers, and
-  not for moving a number between WhatsApp Business Accounts once a
-  portfolio is already verified and live — that's a narrower, separate
-  procedure.
+  API (not a third-party reseller API) wired up end to end: find out
+  which of four verification states an account is actually in, diagnose
+  a rejection, prepare a resubmission with the right document types, and
+  bring up the Cloud API itself — app, WABA, test number, system-user
+  token, real phone number, webhook, smoke test, templates. When a
+  browser-automation tool is connected to the session, drives the
+  matching console screens directly (clicking, selecting, attaching
+  files); otherwise narrates each screen for a human to click. Use when
+  working on Meta business verification, a rejected or stalled
+  verification, the WhatsApp Cloud API, a Meta developer app, a WABA, a
+  system user token, or connecting a product to the official WhatsApp
+  Business Platform. Not for Meta's own paid support tiers, and not for
+  moving a number between WhatsApp Business Accounts once a portfolio is
+  already verified and live — that's a narrower, separate procedure.
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   last-walked: "2026-11-08"
 ---
 
 # meta-whatsapp-cloud-api
+
+This skill takes a Meta business portfolio from whatever state its
+verification is actually in to a verified portfolio and a working
+WhatsApp Cloud API — app, WABA, real phone number, webhook, and a first
+delivered template message. It starts by finding which of four states
+the account's verification is actually in, rather than assuming a
+rejection is already in hand. When a browser-automation tool is
+connected it drives the console itself; otherwise it narrates each
+screen for a human to click, one at a time.
 
 This procedure was last walked against the real Meta Business Suite and
 developer console on 2026-11-08. Meta changes these screens, field names
 and wizard flows often and without notice — if a step below doesn't match
 what you see, open an issue in this repo rather than guessing, and send a
 PR with the correction if you find one.
+
+## Browser mode
+
+Two ways to run this skill, chosen by what's actually connected to the
+session — nothing to configure by hand:
+
+- **A browser-automation tool is connected** (a Chrome-extension-style
+  browser tool, reachable from this session). Check two things: the tool
+  is available to the session at all, and a connected-browsers/tabs
+  listing call — whatever this session's tool calls it — returns at
+  least one entry. When both are true, drive the matching console
+  screens directly: click, select from dropdowns, attach files, per
+  `reference/screens-business-verification.md` and
+  `reference/screens-developer-console.md`. Stop and hand control to a
+  human only for the steps in "Human-only steps," below.
+- **No browser-automation tool is connected** — for example, this skill
+  uploaded into claude.ai on the web with nothing else attached.
+  Narrate every numbered step below for whoever is at the keyboard
+  instead; that's what the rest of this file already reads like.
+
+Say out loud, once, near the start of a session, which of the two modes
+is active — don't make the person guess from behavior alone.
+
+This file deliberately doesn't name a specific extension, vendor or
+internal tool beyond "a browser-automation tool": the check above is
+generic on purpose, so it works with whatever a given session happens to
+have connected.
+
+### Human-only steps
+
+Regardless of which mode is active, these never become an agent action:
+
+- A reCAPTCHA, or any other "prove you're human" challenge.
+- A confirmation code — an SMS, voice, or email one-time code.
+- A two-step PIN.
+- A password, or an access token, typed or pasted into any form field.
+
+Attaching a document that's already been prepared — a bank letter, a
+utility bill, an app icon — is different. With a browser tool connected,
+that's this skill's job: finding the upload control (often a file input
+hidden behind a styled button) and handing it the file's path directly,
+no OS file picker involved. The human's part is producing or choosing
+that file beforehand, offline, never inside the live wizard — this skill
+never authors, crops, retypes, translates or otherwise "cleans up" a
+document itself.
+
+## Which of the four states this account is in
+
+Before assuming a rejection, check the Graph API field and the console —
+every account is in exactly one of four situations:
+
+| State | Meta's own field | Console (Security Center) |
+| --- | --- | --- |
+| Never started | Field absent, or `not_verified` / `ineligible` / `pending_submission` | "Start verification," no draft in progress; "Ineligible" specifically when nothing is attached yet to verify |
+| Submitted, waiting | `pending` | "In review" chip, no "Learn more" action to click |
+| Rejected — Meta wants something from you | `pending_need_more_info` (seen in practice), or `failed` / `rejected` / `expired` / `revoked` (documented, not yet seen on a real screen) | A "Learn more" button opens "Details & next steps" — the ONLY place the actual reason text lives; the Graph field never carries it, only that something is wrong |
+| Verified | `verified` | Heading shows the legal name; the same state also shows at WhatsApp Manager → Settings → Business verification |
+
+Check it with one call, which needs no browser, no login and no
+extension — the single cheapest, most reliable way to catch a status
+change, since Meta's own notification email goes to whichever address is
+set as the portfolio's admin contact, which is very often not an inbox
+anyone checks daily. Find out which address that actually is (Business
+settings → Business info names the portfolio's admin contact) before
+relying on email at all, and check that inbox at least once a day for as
+long as anything is in review — Meta does not resend a notification that
+sat unread, and the Graph check below is a supplement to watching that
+inbox, not a replacement for it:
+
+```bash
+curl -s "https://graph.facebook.com/v25.0/$WABA_ID?fields=business_verification_status" \
+  -H "Authorization: Bearer $ACCESS_TOKEN"
+```
+
+**On the enum values.** Meta's own Graph API field reference
+(https://developers.facebook.com/docs/graph-api/reference/whats-app-business-account/
+— read 2026-11-11) documents the field as
+`enum {expired, failed, ineligible, not_verified, pending, pending_need_more_info, pending_submission, rejected, revoked, verified}`,
+with a single one-line description — "Current status of business
+verification of Meta Business Account which owns this WhatsApp Business
+Account" — and no per-value explanation. Only three of those ten values
+— `pending`, `pending_need_more_info`, and `verified` — have actually
+been matched against a real console screen so far; the table above puts
+the other seven (`expired`, `failed`, `ineligible`, `not_verified`,
+`pending_submission`, `rejected`, `revoked`) into the branch their names
+most plausibly describe (not-started vs. refused outright), as the best
+reading of the name alone, not a confirmed fact. If one of those seven
+turns up in practice and the console disagrees with the branch above,
+trust the console text over this table, and send a correction.
 
 ## Never
 
@@ -34,16 +135,30 @@ PR with the correction if you find one.
 - Guess or "clean up" the legal name, address or phone number entered
   into Business info. Copy them character-for-character from the
   document that will be uploaded to prove them.
+- Author, crop, retype, translate, or otherwise "clean up" a document
+  before attaching it. Only ever attach a file a human has already
+  produced and placed somewhere this skill can reach — a faithful format
+  change (PDF to a high-resolution PNG, say) is fine; changing what's
+  actually printed on the page is not. Reading a document — opening it
+  to extract the name and address actually printed on it, as in
+  "Documents in hand" below — is not covered by this rule; only editing
+  what's on the page is forbidden.
+- Put a confirmation/OTP code, a two-step PIN, a password, or an access
+  token into any form field through an automated fill call, with a
+  browser tool connected or not. Those move only through a human typing
+  them directly into Meta's own console.
 - Treat a long-running `pending` status as "Meta is just slow" without
-  re-checking the actual status field (see §2). It can silently become
-  "needs more information," and the notification email tends to land in
-  an inbox nobody actively watches.
+  re-checking the actual status field (see "Which of the four states
+  this account is in," above). It can silently become "needs more
+  information," and the notification email tends to land in an inbox
+  nobody actively watches.
 - Offer a sole-proprietor tax-registration certificate as proof of legal
   name or address, if the local jurisdiction's equivalent isn't on
   Meta's accepted-document list for that purpose — see the worked
-  example in §1. Meta states plainly when a document "isn't an accepted
-  type"; read that message instead of assuming a well-known local
-  document will be accepted because it's official.
+  example in "Picking the right document set," below. Meta states
+  plainly when a document "isn't an accepted type"; read that message
+  instead of assuming a well-known local document will be accepted
+  because it's official.
 - Submit with the legal business name absent from the website's actual
   homepage. Meta fetches `/`, not an About or Terms page, and fails
   verification on this specifically if the name isn't there.
@@ -55,6 +170,21 @@ PR with the correction if you find one.
 
 ## 1. Business verification
 
+Start here once "Which of the four states this account is in," above,
+says **Never started** or **Rejected — Meta wants something from you**.
+The other two states need nothing from the rest of this section:
+
+- **Submitted, waiting** → nothing to do. Re-check the Graph field in a
+  day or two instead of opening a support thread.
+- **Verified** → nothing here applies. See the Quick reference table at
+  the bottom of this file for what changes once verification lands.
+
+When the state is **Rejected**, open Security Center's "Learn more" /
+"Details & next steps" dialog first — it's the only place the actual
+complaint text lives — then match it against
+`reference/rejection-reasons.md`'s table of reasons and fixes before
+touching anything else below.
+
 ### What verification is, and isn't
 
 Business verification in Meta Business Suite is a different thing from the
@@ -63,22 +193,25 @@ Meta states this directly: "Verifying your business in Meta Business Suite
 is different from Meta Verified for businesses and won't give you a
 verified badge." (Meta Business Help Center, "How to verify your business
 in Meta Business Suite",
-https://www.facebook.com/business/help/2058515294227817, read 2026-11-09 —
-the same sentence is restated at
-https://www.facebook.com/business/help/2342133782492969, read 2026-11-09).
+https://www.facebook.com/business/help/2058515294227817
+— read 2026-11-09 — the same sentence is restated at
+https://www.facebook.com/business/help/2342133782492969
+— read 2026-11-09).
 The verified badge is specifically a Meta Verified benefit: "Meta Verified
 for businesses is a paid subscription that provides tools to help you build
 more confidence with new audiences and protect your brand. This
 subscription comes with benefits like the verified badge, enhanced support,
 impersonation protection, and more."
-(https://www.facebook.com/business/help/308979828303560, read 2026-11-09).
+(https://www.facebook.com/business/help/308979828303560
+— read 2026-11-09).
 Meta Verified is billed on a recurring basis and is a separate purchase
 from the free verification procedure this skill covers.
 
 What business verification actually unlocks, in Meta's own words: "Business
 verification is required to access certain advertising, developer, billing
 and spending features."
-(https://www.facebook.com/business/help/2058515294227817, read 2026-11-09).
+(https://www.facebook.com/business/help/2058515294227817
+— read 2026-11-09).
 Spelled out further on
 https://www.facebook.com/business/help/1095661473946872 (read 2026-11-09):
 the daily spending limit, eligible developer features, Meta Business
@@ -91,17 +224,18 @@ Access now requires Business Verification... Apps that request advanced
 access for permissions and apps that allow other Businesses to access
 their own data must be connected to a Business that has completed Business
 Verification."
-(https://developers.facebook.com/docs/development/release/business-verification/,
-read 2026-11-09).
+(https://developers.facebook.com/docs/development/release/business-verification/
+— read 2026-11-09).
 
 Checked and not found on any of the pages above, or on Meta's account-
 scaling page for WhatsApp
-(https://www.facebook.com/business/help/595597942906808, read 2026-11-09):
+(https://www.facebook.com/business/help/595597942906808
+— read 2026-11-09):
 any statement from Meta about how many times to resubmit before stopping,
 or advice to fix documents at the root rather than resubmit again. That
 advice is common on third-party agency blogs but Meta does not say it
 anywhere checked for this skill, so it isn't repeated here as fact. The
-"Never" list below sticks to what Meta's own pages do support: a timing
+"Never" list above sticks to what Meta's own pages do support: a timing
 rule, not a count.
 
 ### Picking the right document set
@@ -127,7 +261,9 @@ What worked instead was a bank account-ownership letter for the legal
 name (most banks can issue one on request, specifically for business
 verification) plus a utility bill for the address — one document from
 each of the two accepted categories, each printing the name or address
-exactly as entered in Business info.
+exactly as entered in Business info. The full rejection-reason table —
+what Meta's console says and the usual fix for each — lives in
+`reference/rejection-reasons.md`.
 
 General rules that hold regardless of jurisdiction:
 - A single document carrying both the name and the address in full,
@@ -143,6 +279,43 @@ General rules that hold regardless of jurisdiction:
 - A faithful full-page render from one file format to another (PDF to a
   high-resolution PNG, say) is fine; cropping or retyping any part of it
   is not.
+
+### Documents in hand
+
+Before anything is submitted, and before opening the wizard, ask which
+documents are actually available — not which ones would ideally exist.
+Walk through the accepted categories in the table above and have each
+candidate document handed over as a PDF or an image. Reading it is
+fine; it's editing it that's forbidden (see "Never," above — a document
+is read, never authored, cropped, retyped, translated, or "cleaned
+up").
+
+For each document actually in hand:
+
+1. Read what's printed on it: the exact legal name, and the exact
+   address if it carries one.
+2. Compare that, character for character, against two things: the
+   Business info fields, and the legal-name line on the website's own
+   homepage.
+3. Flag every difference, down to a missing word, an abbreviation, a
+   transliteration spelled two different ways on the same document, or
+   an address that's simply stale because whoever issued the document
+   was never told about a move. A document that looks official can
+   still carry the wrong information printed on it.
+4. Say which two documents (ideally one per category — name, and
+   address or phone) are the ones to actually submit, and which field —
+   Business info, or the homepage text — has to change to match the
+   document. The document is never the thing that gets changed; it was
+   already issued by someone else. If a field disagrees with a document
+   that's otherwise right, fix the field. If the document itself is
+   wrong for the purpose (the wrong name on it, an expired date), it
+   doesn't go in the pile at all — go get a different one.
+
+This step catches two real failure modes before either one costs a
+review cycle: a document that doesn't actually prove what it's being
+submitted to prove, and a silent mismatch between a document and
+Business info that would otherwise only surface once Meta's own review
+flags it.
 
 ### Preparing the portfolio before submitting
 
@@ -194,16 +367,18 @@ Go to the verification entry point (Security Center, in Meta's current
 layout), pick the use case that matches what's being verified (there is
 usually a separate option specifically for setting up a WhatsApp Business
 account — prefer that one over a generic "app permissions" option if both
-exist), and walk the wizard: country, business type (an unregistered sole
-trader is usually "Sole Proprietorship," and is often still answered as
-"Registered" if the local tax authority has issued any registration
-number to it, even without a formal company), business details, a
-CAPTCHA (always completed by a human, never by an automated agent), a
-public-records match step, the confirmation channel, document upload, and
-a final review/submit.
+exist), and walk the wizard: country, business type, business details, a
+CAPTCHA (always completed by the human account holder, never by this
+skill), a public-records match step, the confirmation channel, document
+upload, and a final review/submit. With a browser tool connected, the
+screen-by-screen mechanics — which fields are dropdowns, which upload
+control is a hidden file input, which single wrong click resets a code —
+live in `reference/screens-business-verification.md`; walk it screen by
+screen instead of improvising.
 
-Two traps worth expecting on that public-records step and the upload
-step:
+Two traps worth expecting on the public-records step and the upload
+step, in brief (the full detail, with every screen in order, is in
+`reference/screens-business-verification.md`):
 - Meta may offer a public-records match that looks plausible but belongs
   to a different, unrelated entity with a similar name. Verify every
   identifying detail (address, domain, any tax or registration number
@@ -225,24 +400,13 @@ for a document-based one. Don't touch the submission while it's "pending"
 none of that speeds up a queued review, and anything that creates a
 disagreement with what was submitted can only hurt.
 
-### Watching for "needs more information" without relying on email
+### Re-checking status after submitting
 
-Meta's notification about a status change goes to whatever email address
-is set as the portfolio's admin contact — which is very often not the
-inbox someone checks daily. The one browser-free, reliable way to check
-is a direct API call once any API access already exists:
-
-```bash
-curl -s "https://graph.facebook.com/v25.0/$WABA_ID?fields=business_verification_status" \
-  -H "Authorization: Bearer $ACCESS_TOKEN"
-```
-
-Values seen in practice: `pending` (Meta's turn, nothing to do but wait),
-`pending_need_more_info` (your turn — go read exactly what's being asked
-in the console, which this field alone doesn't say), and `verified`. Poll
-this periodically rather than waiting to be told — the gap between a
-status silently flipping to "needs more information" and someone actually
-noticing has cost real submissions a full review cycle.
+Don't rely on the notification email to tell you a status changed — see
+"Which of the four states this account is in," above, for why. Re-run
+that same Graph call periodically instead of waiting to be told; the gap
+between a status silently flipping to "needs more information" and
+someone actually noticing has cost real submissions a full review cycle.
 
 ## 2. Bringing up the Cloud API (works before verification lands too)
 
@@ -251,7 +415,12 @@ changes the messaging-volume ceiling, not whether the API itself works.
 Bring the two up in parallel rather than waiting for one before starting
 the other. A business portfolio must already exist (created at
 business.facebook.com) before step 1 — the step below attaches a new app
-to that existing portfolio, it does not create one.
+to that existing portfolio, it does not create one. With a browser tool
+connected, the exact console mechanics for every step here — menu paths,
+UI quirks, which clicks are agent-drivable and which aren't — live in
+`reference/screens-developer-console.md`; the underlying Graph calls,
+with example `curl` commands and the values seen in practice, live in
+`reference/api-checks.md`.
 
 1. **Create the app.** In the developer console, create an app using the
    WhatsApp-focused use case ("connect with customers through WhatsApp,"
@@ -266,7 +435,9 @@ to that existing portfolio, it does not create one.
    trial period, supports a handful of pre-approved recipient numbers
    (each needing a one-time code to whitelist), and is the fastest way to
    prove the webhook and message-sending code work before a real SIM is
-   involved.
+   involved. It can't carry a reviewed display name, and it never goes
+   through business verification itself — both only start to matter once
+   a real number replaces it.
 4. **Generate a system-user access token**, not a temporary user token.
    A system user with the right role, assigned to the app with
    management access, can generate a token with no expiry — the
@@ -281,7 +452,9 @@ to that existing portfolio, it does not create one.
    it to the Cloud API. Registering a number still tied to the consumer
    app from the Cloud API side fails outright. Once added, it typically
    needs an SMS or voice one-time code, followed by registering it on the
-   Cloud API with a two-step PIN the account holder chooses.
+   Cloud API with a two-step PIN the account holder chooses. A number
+   that must keep answering from the WhatsApp phone app needs a
+   different route (coexistence) that this skill doesn't cover.
 6. **Add a payment method to the WABA specifically**, not just at the
    portfolio level — a WABA with no payment method on file eventually
    blocks all outbound business-initiated messages with no warning beyond
@@ -354,5 +527,17 @@ time.
 | Display name | Accepted but shown small, no formal review | Reviewed, shown normally in chats |
 | Replies inside the 24h customer window | Unlimited, free-form, doesn't count against any limit | Same |
 
+Verification isn't the only way to step up from the 250-contact tier.
+Meta's own messaging-limits documentation
+(https://developers.facebook.com/documentation/business-messaging/whatsapp/messaging-limits
+— read 2026-11-11) names, among its scaling paths to the 2,000-contact
+tier: "Send 2,000 delivered messages outside of customer service
+windows to unique WhatsApp user phone numbers within a 30-day moving
+period, using templates with a high quality rating" — no verification
+required, just that usage and quality history.
+
 ---
-Last reviewed: 2026-11-08.
+Source: generalized from a private, account-specific runbook, as of
+2026-11-08. The status-field enum in "Which of the four states this
+account is in" was read directly off Meta's own live Graph API
+reference on 2026-11-11.
