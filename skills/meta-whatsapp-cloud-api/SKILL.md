@@ -17,11 +17,17 @@ description: >-
   moving a number between WhatsApp Business Accounts once a portfolio is
   already verified and live — that's a narrower, separate procedure.
 metadata:
-  version: "1.1.0"
+  version: "1.1.1"
   last-walked: "2026-11-08"
 ---
 
 # meta-whatsapp-cloud-api
+
+Before anything else, every reply that starts a session, and every
+reply to a user who jumps straight to a step, begins with one line:
+`Browser mode: driving — a browser tool is connected` or `Browser mode:
+narrating — no browser tool is connected, I will tell you what to
+click`. Say it even when the user already told you which it is.
 
 This skill takes a Meta business portfolio from whatever state its
 verification is actually in to a verified portfolio and a working
@@ -57,8 +63,13 @@ session — nothing to configure by hand:
   Narrate every numbered step below for whoever is at the keyboard
   instead; that's what the rest of this file already reads like.
 
-Say out loud, once, near the start of a session, which of the two modes
-is active — don't make the person guess from behavior alone.
+The FIRST line of this skill's first reply in a session states which
+mode is active, in one sentence, before anything else — not "near the
+start," the very first thing said: "Browser mode: driving — a browser
+tool is connected" or "Browser mode: narrating — no browser tool is
+connected, I will tell you what to click." Don't make the person guess
+from behavior alone, and don't let a step chosen first (jumping straight
+to "Documents in hand," say) skip this.
 
 This file deliberately doesn't name a specific extension, vendor or
 internal tool beyond "a browser-automation tool": the check above is
@@ -85,8 +96,15 @@ document itself.
 
 ## Which of the four states this account is in
 
-Before assuming a rejection, check the Graph API field and the console —
-every account is in exactly one of four situations:
+Opening checklist, in order, even when a user jumps straight to a later
+step like "Documents in hand":
+
+- State the browser mode first — see "Browser mode," above: "Browser
+  mode: driving — a browser tool is connected" or "Browser mode:
+  narrating — no browser tool is connected, I will tell you what to
+  click."
+- Before assuming a rejection, check the Graph API field and the console —
+  every account is in exactly one of four situations:
 
 | State | Meta's own field | Console (Security Center) |
 | --- | --- | --- |
@@ -94,6 +112,16 @@ every account is in exactly one of four situations:
 | Submitted, waiting | `pending` | "In review" chip, no "Learn more" action to click |
 | Rejected — Meta wants something from you | `pending_need_more_info` (seen in practice), or `failed` / `rejected` / `expired` / `revoked` (documented, not yet seen on a real screen) | A "Learn more" button opens "Details & next steps" — the ONLY place the actual reason text lives; the Graph field never carries it, only that something is wrong |
 | Verified | `verified` | Heading shows the legal name; the same state also shows at WhatsApp Manager → Settings → Business verification |
+
+Report the result of this check in this exact shape, its first line
+always the same mode line as everywhere else in this file:
+
+```
+Browser mode: driving — a browser tool is connected (or: narrating — no
+browser tool is connected, I will tell you what to click)
+Account state: <Never started | Submitted, waiting | Rejected — Meta
+wants something from you | Verified>
+```
 
 Check it with one call, which needs no browser, no login and no
 extension — the single cheapest, most reliable way to catch a status
@@ -316,6 +344,38 @@ review cycle: a document that doesn't actually prove what it's being
 submitted to prove, and a silent mismatch between a document and
 Business info that would otherwise only surface once Meta's own review
 flags it.
+
+This step always ends with a required output block, in this exact
+shape, naming no fact beyond what the documents and fields already say.
+Its first line is always the mode line from the top of this file — say
+it again here even if it was already said earlier in the session:
+
+```
+Browser mode: driving — a browser tool is connected (or: narrating — no
+browser tool is connected, I will tell you what to click)
+Submit these 2:
+<filename> — <category: legal business name | address>
+<filename> — <category: legal business name | address>
+Fix before submitting:
+<mismatch> — <which side changes: the field, or nothing (go get a
+different document)>
+Do not submit:
+<filename or "none"> — <why it's ruled out, or omit the line>
+```
+
+"Submit these 2" is always exactly 2 named documents — never 1, even
+when a single document in hand genuinely carries both the name and the
+address and would, on paper, cover both accepted categories (see
+"General rules that hold regardless of jurisdiction," above). Meta's
+wizard still asks for a document per category; offering one document
+to cover both is the riskier submission, not a shortcut, because it
+leaves no second document if that single one gets challenged. Name a
+second document from the other category, even an imperfect one, rather
+than resting on one. If the person holds truly only 1 usable document,
+say that plainly instead of forcing a second line — "Submit this 1 — no
+document for the other category is in hand yet" — and name what kind of
+document to obtain for the missing category, per the table in "Picking
+the right document set," above.
 
 ### Preparing the portfolio before submitting
 
