@@ -23,6 +23,12 @@ metadata:
 
 # meta-whatsapp-cloud-api
 
+Before anything else, every reply that starts a session, and every
+reply to a user who jumps straight to a step, begins with one line:
+`Browser mode: driving — a browser tool is connected` or `Browser mode:
+narrating — no browser tool is connected, I will tell you what to
+click`. Say it even when the user already told you which it is.
+
 This skill takes a Meta business portfolio from whatever state its
 verification is actually in to a verified portfolio and a working
 WhatsApp Cloud API — app, WABA, real phone number, webhook, and a first
@@ -106,6 +112,16 @@ step like "Documents in hand":
 | Submitted, waiting | `pending` | "In review" chip, no "Learn more" action to click |
 | Rejected — Meta wants something from you | `pending_need_more_info` (seen in practice), or `failed` / `rejected` / `expired` / `revoked` (documented, not yet seen on a real screen) | A "Learn more" button opens "Details & next steps" — the ONLY place the actual reason text lives; the Graph field never carries it, only that something is wrong |
 | Verified | `verified` | Heading shows the legal name; the same state also shows at WhatsApp Manager → Settings → Business verification |
+
+Report the result of this check in this exact shape, its first line
+always the same mode line as everywhere else in this file:
+
+```
+Browser mode: driving — a browser tool is connected (or: narrating — no
+browser tool is connected, I will tell you what to click)
+Account state: <Never started | Submitted, waiting | Rejected — Meta
+wants something from you | Verified>
+```
 
 Check it with one call, which needs no browser, no login and no
 extension — the single cheapest, most reliable way to catch a status
@@ -330,9 +346,13 @@ Business info that would otherwise only surface once Meta's own review
 flags it.
 
 This step always ends with a required output block, in this exact
-shape, naming no fact beyond what the documents and fields already say:
+shape, naming no fact beyond what the documents and fields already say.
+Its first line is always the mode line from the top of this file — say
+it again here even if it was already said earlier in the session:
 
 ```
+Browser mode: driving — a browser tool is connected (or: narrating — no
+browser tool is connected, I will tell you what to click)
 Submit these 2:
 <filename> — <category: legal business name | address>
 <filename> — <category: legal business name | address>
