@@ -40,11 +40,26 @@ Then install either or both skills from the marketplace it adds.
 
 ## What's in each skill
 
-- `skills/store-publishing/SKILL.md` — first-time setup for both stores,
-  developer-account questions (individual vs organization, app transfers,
-  package/bundle id rules), the repeat-release checklist, and rejection
-  handling. `reference.md` carries the longer per-store detail and the
-  pre-submission readiness checklist.
+- `skills/store-publishing/SKILL.md` — first checks which of eight states
+  the developer account and the app are actually in on each store (no
+  account yet / account pending / account ready, no app / listing
+  incomplete / build uploaded, forms incomplete / in review / rejected /
+  live), including creating and verifying the developer account itself
+  (D-U-N-S, Apple's Individual vs Organization choice, Apple's DSA
+  trader-contact verification, Google's personal-account tester gate),
+  then runs the matching branch through to a live release and every
+  repeat version after that. With a browser-automation tool connected it
+  drives the console screens directly; the build and its upload always
+  run from a terminal or an official store API, never a browser tool;
+  otherwise it narrates each screen for a human to click. Its
+  `reference/` folder carries the per-store state-detection table
+  (`states-and-detection.md`), dated screen maps for Play Console and
+  App Store Connect (`screens-play-console.md`,
+  `screens-app-store-connect.md`), the account-creation procedure
+  (`developer-account-setup.md`), toolchain-agnostic build/upload
+  guidance (`build-and-upload-desktop.md`), the rejection-reason table
+  (`rejection-reasons.md`), and the Data Safety / App Privacy forms
+  guidance (`forms-data-safety-and-privacy.md`).
 - `skills/meta-whatsapp-cloud-api/SKILL.md` — first checks which of four
   states an account's verification is actually in (never started /
   submitted and waiting / rejected with a reason / verified) from the
