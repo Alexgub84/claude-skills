@@ -233,7 +233,7 @@ inbox someone checks daily. The one browser-free, reliable way to check
 is a direct API call once any API access already exists:
 
 ```bash
-curl -s "https://graph.facebook.com/v21.0/$WABA_ID?fields=business_verification_status" \
+curl -s "https://graph.facebook.com/v25.0/$WABA_ID?fields=business_verification_status" \
   -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
 
@@ -355,4 +355,4 @@ time.
 | Replies inside the 24h customer window | Unlimited, free-form, doesn't count against any limit | Same |
 
 ---
-Source: meta-business-setup (SKILL.md + reference.md), as of 2026-11-08.
+Last reviewed: 2026-11-08.
