@@ -443,7 +443,9 @@ with example `curl` commands and the values seen in practice, live in
    it to the Cloud API. Registering a number still tied to the consumer
    app from the Cloud API side fails outright. Once added, it typically
    needs an SMS or voice one-time code, followed by registering it on the
-   Cloud API with a two-step PIN the account holder chooses.
+   Cloud API with a two-step PIN the account holder chooses. A number
+   that must keep answering from the WhatsApp phone app needs a
+   different route (coexistence) that this skill doesn't cover.
 6. **Add a payment method to the WABA specifically**, not just at the
    portfolio level — a WABA with no payment method on file eventually
    blocks all outbound business-initiated messages with no warning beyond
@@ -506,40 +508,6 @@ migrating approved templates across, freeing the number from its old
 WABA, then re-adding and re-registering it on the new one) — out of scope
 for this skill, which only covers getting a number live for the first
 time.
-
-## 4. Keeping the WhatsApp phone app (coexistence)
-
-A number that has to keep answering from the phone app can't take the
-clean move in step 5 of "Bringing up the Cloud API" above — registering
-a number still linked to the consumer app fails outright, the same way
-it always does. Two routes keep the phone app and its chat history
-working side by side with the Cloud API; which one fits depends on how
-soon it's needed:
-
-- **Through a partner now.** A Business Solution Provider that supports
-  coexistence (360dialog is one, as of this writing) runs Meta's
-  Embedded Signup flow on its own platform; the account holder scans a
-  QR code and chooses "Connect a WhatsApp Business App" — the phone app
-  keeps working, chats stay synced both ways, and the integration points
-  at the partner's own base URL and API key instead of calling Meta
-  directly. Same day, but an ongoing partner fee applies, and the
-  business's own portfolio — not the partner's — still ends up owning
-  the resulting WABA and number.
-- **Running your own Tech Provider setup.** Needs the portfolio's own
-  business verification done first, then Meta's app review for the
-  WhatsApp permissions and Facebook Login for Business, then an
-  Embedded Signup v4 flow built on the business's own page. No ongoing
-  fee, but weeks rather than a day, and only worth it at a scale where
-  onboarding other businesses' numbers is the point.
-
-Either route needs WhatsApp Business app version 2.24.17 or later on
-the phone. A coexistence account can't use the standard business
-verification wizard in this skill's "1. Business verification" section
-— it needs partner-led verification or Meta Verified instead — so the
-250-contact unverified limit applies until that's resolved separately.
-Chat history from before onboarding stays only in the phone app; the
-Cloud API side never sees it, only messages sent after onboarding sync
-both ways.
 
 ## Quick reference
 

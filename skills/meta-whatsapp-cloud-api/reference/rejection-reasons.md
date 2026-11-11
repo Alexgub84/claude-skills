@@ -54,6 +54,13 @@ not a third blind resubmission:
    account is in" in `SKILL.md` for why that inbox needs watching
    directly, not just assumed).
 
+Expect an automated answer, not a human one: in practice this ticket
+has come back within minutes from an automated agent with a templated
+reply, and the case closed the same night with no way to reopen it —
+the optional chat-support option routed to the same bot. Treat filing
+the ticket as making a record of the attempt, not as a lever that
+reliably gets a person to look at the case.
+
 Business Support Home's own landing page offers no general "Get
 support" button — only the list of cases already opened. "Ask a
 Question" from that same page is how a new one actually starts.
