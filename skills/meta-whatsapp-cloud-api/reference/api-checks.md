@@ -12,7 +12,7 @@ against a real screen yet — flagged the same way in `SKILL.md`.
 ## Verification status
 
 ```bash
-curl -s "https://graph.facebook.com/v21.0/$WABA_ID?fields=business_verification_status" \
+curl -s "https://graph.facebook.com/v25.0/$WABA_ID?fields=business_verification_status" \
   -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
 
@@ -37,7 +37,7 @@ signal, before spending time on the webhook code.
 ## Phone numbers on a WABA
 
 ```bash
-curl -s "https://graph.facebook.com/v21.0/$WABA_ID/phone_numbers" \
+curl -s "https://graph.facebook.com/v25.0/$WABA_ID/phone_numbers" \
   -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
 
@@ -47,7 +47,7 @@ Returns each number's own ID, display number, verified name, and
 ## Which apps are subscribed to a WABA
 
 ```bash
-curl -s "https://graph.facebook.com/v21.0/$WABA_ID/subscribed_apps" \
+curl -s "https://graph.facebook.com/v25.0/$WABA_ID/subscribed_apps" \
   -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
 
@@ -58,7 +58,7 @@ gone, not just removed from the places the console shows by default.
 ## Message templates
 
 ```bash
-curl -s "https://graph.facebook.com/v21.0/$WABA_ID/message_templates?fields=name,status,category,language" \
+curl -s "https://graph.facebook.com/v25.0/$WABA_ID/message_templates?fields=name,status,category,language" \
   -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
 
@@ -69,7 +69,7 @@ column, but this is the version to check from a script or a CI job.
 ## Whether a WABA can actually send
 
 ```bash
-curl -s "https://graph.facebook.com/v21.0/$WABA_ID?fields=health_status" \
+curl -s "https://graph.facebook.com/v25.0/$WABA_ID?fields=health_status" \
   -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
 
@@ -82,17 +82,17 @@ send on a real number fails.
 ## Requesting, verifying and registering a real number
 
 ```bash
-curl -X POST "https://graph.facebook.com/v21.0/$PHONE_NUMBER_ID/request_code" \
+curl -X POST "https://graph.facebook.com/v25.0/$PHONE_NUMBER_ID/request_code" \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"code_method":"SMS","language":"en_US"}'
 
-curl -X POST "https://graph.facebook.com/v21.0/$PHONE_NUMBER_ID/verify_code" \
+curl -X POST "https://graph.facebook.com/v25.0/$PHONE_NUMBER_ID/verify_code" \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"code":"123456"}'
 
-curl -X POST "https://graph.facebook.com/v21.0/$PHONE_NUMBER_ID/register" \
+curl -X POST "https://graph.facebook.com/v25.0/$PHONE_NUMBER_ID/register" \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"messaging_product":"whatsapp","pin":"'"$PIN"'"}'
@@ -105,7 +105,7 @@ itself (see "Human-only steps" in `SKILL.md`).
 ## Subscribing an app to a WABA
 
 ```bash
-curl -X POST "https://graph.facebook.com/v21.0/$WABA_ID/subscribed_apps" \
+curl -X POST "https://graph.facebook.com/v25.0/$WABA_ID/subscribed_apps" \
   -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
 

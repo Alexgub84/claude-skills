@@ -93,7 +93,7 @@ set as the portfolio's admin contact, which is very often not an inbox
 anyone checks daily:
 
 ```bash
-curl -s "https://graph.facebook.com/v21.0/$WABA_ID?fields=business_verification_status" \
+curl -s "https://graph.facebook.com/v25.0/$WABA_ID?fields=business_verification_status" \
   -H "Authorization: Bearer $ACCESS_TOKEN"
 ```
 
