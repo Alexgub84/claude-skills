@@ -90,7 +90,12 @@ Check it with one call, which needs no browser, no login and no
 extension — the single cheapest, most reliable way to catch a status
 change, since Meta's own notification email goes to whichever address is
 set as the portfolio's admin contact, which is very often not an inbox
-anyone checks daily:
+anyone checks daily. Find out which address that actually is (Business
+settings → Business info names the portfolio's admin contact) before
+relying on email at all, and check that inbox at least once a day for as
+long as anything is in review — Meta does not resend a notification that
+sat unread, and the Graph check below is a supplement to watching that
+inbox, not a replacement for it:
 
 ```bash
 curl -s "https://graph.facebook.com/v25.0/$WABA_ID?fields=business_verification_status" \
@@ -125,7 +130,10 @@ trust the console text over this table, and send a correction.
   before attaching it. Only ever attach a file a human has already
   produced and placed somewhere this skill can reach — a faithful format
   change (PDF to a high-resolution PNG, say) is fine; changing what's
-  actually printed on the page is not.
+  actually printed on the page is not. Reading a document — opening it
+  to extract the name and address actually printed on it, as in
+  "Documents in hand" below — is not covered by this rule; only editing
+  what's on the page is forbidden.
 - Put a confirmation/OTP code, a two-step PIN, a password, or an access
   token into any form field through an automated fill call, with a
   browser tool connected or not. Those move only through a human typing
@@ -263,6 +271,43 @@ General rules that hold regardless of jurisdiction:
   high-resolution PNG, say) is fine; cropping or retyping any part of it
   is not.
 
+### Documents in hand
+
+Before anything is submitted, and before opening the wizard, ask which
+documents are actually available — not which ones would ideally exist.
+Walk through the accepted categories in the table above and have each
+candidate document handed over as a PDF or an image. Reading it is
+fine; it's editing it that's forbidden (see "Never," above — a document
+is read, never authored, cropped, retyped, translated, or "cleaned
+up").
+
+For each document actually in hand:
+
+1. Read what's printed on it: the exact legal name, and the exact
+   address if it carries one.
+2. Compare that, character for character, against two things: the
+   Business info fields, and the legal-name line on the website's own
+   homepage.
+3. Flag every difference, down to a missing word, an abbreviation, a
+   transliteration spelled two different ways on the same document, or
+   an address that's simply stale because whoever issued the document
+   was never told about a move. A document that looks official can
+   still carry the wrong information printed on it.
+4. Say which two documents (ideally one per category — name, and
+   address or phone) are the ones to actually submit, and which field —
+   Business info, or the homepage text — has to change to match the
+   document. The document is never the thing that gets changed; it was
+   already issued by someone else. If a field disagrees with a document
+   that's otherwise right, fix the field. If the document itself is
+   wrong for the purpose (the wrong name on it, an expired date), it
+   doesn't go in the pile at all — go get a different one.
+
+This step catches two real failure modes before either one costs a
+review cycle: a document that doesn't actually prove what it's being
+submitted to prove, and a silent mismatch between a document and
+Business info that would otherwise only surface once Meta's own review
+flags it.
+
 ### Preparing the portfolio before submitting
 
 - Business info fields must mirror the uploaded document exactly,
@@ -381,7 +426,9 @@ with example `curl` commands and the values seen in practice, live in
    trial period, supports a handful of pre-approved recipient numbers
    (each needing a one-time code to whitelist), and is the fastest way to
    prove the webhook and message-sending code work before a real SIM is
-   involved.
+   involved. It can't carry a reviewed display name, and it never goes
+   through business verification itself — both only start to matter once
+   a real number replaces it.
 4. **Generate a system-user access token**, not a temporary user token.
    A system user with the right role, assigned to the app with
    management access, can generate a token with no expiry — the
@@ -460,6 +507,40 @@ WABA, then re-adding and re-registering it on the new one) — out of scope
 for this skill, which only covers getting a number live for the first
 time.
 
+## 4. Keeping the WhatsApp phone app (coexistence)
+
+A number that has to keep answering from the phone app can't take the
+clean move in step 5 of "Bringing up the Cloud API" above — registering
+a number still linked to the consumer app fails outright, the same way
+it always does. Two routes keep the phone app and its chat history
+working side by side with the Cloud API; which one fits depends on how
+soon it's needed:
+
+- **Through a partner now.** A Business Solution Provider that supports
+  coexistence (360dialog is one, as of this writing) runs Meta's
+  Embedded Signup flow on its own platform; the account holder scans a
+  QR code and chooses "Connect a WhatsApp Business App" — the phone app
+  keeps working, chats stay synced both ways, and the integration points
+  at the partner's own base URL and API key instead of calling Meta
+  directly. Same day, but an ongoing partner fee applies, and the
+  business's own portfolio — not the partner's — still ends up owning
+  the resulting WABA and number.
+- **Running your own Tech Provider setup.** Needs the portfolio's own
+  business verification done first, then Meta's app review for the
+  WhatsApp permissions and Facebook Login for Business, then an
+  Embedded Signup v4 flow built on the business's own page. No ongoing
+  fee, but weeks rather than a day, and only worth it at a scale where
+  onboarding other businesses' numbers is the point.
+
+Either route needs WhatsApp Business app version 2.24.17 or later on
+the phone. A coexistence account can't use the standard business
+verification wizard in this skill's "1. Business verification" section
+— it needs partner-led verification or Meta Verified instead — so the
+250-contact unverified limit applies until that's resolved separately.
+Chat history from before onboarding stays only in the phone app; the
+Cloud API side never sees it, only messages sent after onboarding sync
+both ways.
+
 ## Quick reference
 
 | Thing | Unverified portfolio | After verification |
@@ -468,6 +549,15 @@ time.
 | Registered phone numbers | A small fixed cap per portfolio | A much higher cap per portfolio |
 | Display name | Accepted but shown small, no formal review | Reviewed, shown normally in chats |
 | Replies inside the 24h customer window | Unlimited, free-form, doesn't count against any limit | Same |
+
+Verification isn't the only way to step up from the 250-contact tier.
+Meta's own messaging-limits documentation
+(https://developers.facebook.com/documentation/business-messaging/whatsapp/messaging-limits
+— read 2026-11-11) names, among its scaling paths to the 2,000-contact
+tier: "Send 2,000 delivered messages outside of customer service
+windows to unique WhatsApp user phone numbers within a 30-day moving
+period, using templates with a high quality rating" — no verification
+required, just that usage and quality history.
 
 ---
 Source: generalized from a private, account-specific runbook, as of

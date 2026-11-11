@@ -22,10 +22,16 @@ tool once one is connected), **human** (never an agent action — see
    settings. — *agent*
 3. **Business type.** Corporation / Sole Proprietorship / Partnership /
    Private Company / Institution, then a second question asking whether
-   the business is officially registered. A sole trader holding any
-   kind of tax-authority registration number is usually still
-   "Registered," even with no formal company — if a rejection
-   specifically cites this answer, try flipping it. — *agent*
+   the business is officially registered. Observed for Israel: an
+   `עוסק פטור` sole proprietor holding the registration certificate
+   issued by the tax authority answers "Registered," even with no
+   formal company — the wizard's "Not yet registered" option also reads
+   as describing a business represented by an individual, which is
+   confusingly close; if a rejection specifically cites this answer, try
+   flipping it. Outside Israel, this hasn't been walked against a real
+   account — check what the wizard's own text says counts as
+   "Registered" for that business type rather than assuming the same
+   answer applies. — *agent*
 4. **Business details.** A "business name" field expects the name
    exactly as the documents will show it (the registrant, not
    necessarily a trade name), and a separate optional "alternative /

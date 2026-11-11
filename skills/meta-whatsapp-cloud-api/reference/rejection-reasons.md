@@ -27,9 +27,36 @@ complaint text lives — then match it against the table below.
 | Account history (prior policy strikes, a restricted ad account) | Clear the underlying restriction first |
 | A sensitive category (finance, health, gambling, alcohol) | Extra documentation is likely required; pick a more neutral, still-honest category if one genuinely applies |
 
-An appeal or review-request option is sometimes offered after a
-rejection and sometimes absent entirely. When it is absent, the only
-route is a corrected resubmission with the actual problem fixed.
+## After a rejection: no appeal button, so a ticket instead
+
+No appeal or review-request button has been seen in Security Center
+after a rejection — only "Start verification" (or "Continue," if a
+draft already exists). The route after a rejection is a corrected
+resubmission, not an appeal; there is nothing in the console to click
+that requests a review of the same submission.
+
+After a repeated rejection, the next lever is a direct-support ticket,
+not a third blind resubmission:
+
+1. Business Support Home → "Ask a Question."
+2. For a business-verification question, topic "Dev: Onboarding" —
+   Request Types include "Troubleshoot Meta Business Verification,"
+   "Appeal API Onboarding Decision," "App Review Questions/Issues," and
+   "Onboarding Status Pending." Ticking the optional "Enable Chat
+   Support" field has been seen to work.
+3. For a WABA or phone-number question instead, topic "Dev: Account &
+   WABA" (siblings seen in the same menu: Dev: Cloud API, Dev: Phone
+   Number & Registration, Dev: Message Templates, Dev: Onboarding, Dev:
+   Billing) — pick a Request Type, then the WABA and phone number from
+   autocomplete.
+4. Submit. The case page carries its own agent chat; replies also land
+   in the portfolio's admin email (see "Which of the four states this
+   account is in" in `SKILL.md` for why that inbox needs watching
+   directly, not just assumed).
+
+Business Support Home's own landing page offers no general "Get
+support" button — only the list of cases already opened. "Ask a
+Question" from that same page is how a new one actually starts.
 
 ## Accepted document types, worked through one jurisdiction (Israel)
 
