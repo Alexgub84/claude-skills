@@ -17,7 +17,7 @@ description: >-
   moving a number between WhatsApp Business Accounts once a portfolio is
   already verified and live — that's a narrower, separate procedure.
 metadata:
-  version: "1.1.0"
+  version: "1.1.1"
   last-walked: "2026-11-08"
 ---
 
@@ -57,8 +57,13 @@ session — nothing to configure by hand:
   Narrate every numbered step below for whoever is at the keyboard
   instead; that's what the rest of this file already reads like.
 
-Say out loud, once, near the start of a session, which of the two modes
-is active — don't make the person guess from behavior alone.
+The FIRST line of this skill's first reply in a session states which
+mode is active, in one sentence, before anything else — not "near the
+start," the very first thing said: "Browser mode: driving — a browser
+tool is connected" or "Browser mode: narrating — no browser tool is
+connected, I will tell you what to click." Don't make the person guess
+from behavior alone, and don't let a step chosen first (jumping straight
+to "Documents in hand," say) skip this.
 
 This file deliberately doesn't name a specific extension, vendor or
 internal tool beyond "a browser-automation tool": the check above is
@@ -85,8 +90,15 @@ document itself.
 
 ## Which of the four states this account is in
 
-Before assuming a rejection, check the Graph API field and the console —
-every account is in exactly one of four situations:
+Opening checklist, in order, even when a user jumps straight to a later
+step like "Documents in hand":
+
+- State the browser mode first — see "Browser mode," above: "Browser
+  mode: driving — a browser tool is connected" or "Browser mode:
+  narrating — no browser tool is connected, I will tell you what to
+  click."
+- Before assuming a rejection, check the Graph API field and the console —
+  every account is in exactly one of four situations:
 
 | State | Meta's own field | Console (Security Center) |
 | --- | --- | --- |
@@ -316,6 +328,34 @@ review cycle: a document that doesn't actually prove what it's being
 submitted to prove, and a silent mismatch between a document and
 Business info that would otherwise only surface once Meta's own review
 flags it.
+
+This step always ends with a required output block, in this exact
+shape, naming no fact beyond what the documents and fields already say:
+
+```
+Submit these 2:
+<filename> — <category: legal business name | address>
+<filename> — <category: legal business name | address>
+Fix before submitting:
+<mismatch> — <which side changes: the field, or nothing (go get a
+different document)>
+Do not submit:
+<filename or "none"> — <why it's ruled out, or omit the line>
+```
+
+"Submit these 2" is always exactly 2 named documents — never 1, even
+when a single document in hand genuinely carries both the name and the
+address and would, on paper, cover both accepted categories (see
+"General rules that hold regardless of jurisdiction," above). Meta's
+wizard still asks for a document per category; offering one document
+to cover both is the riskier submission, not a shortcut, because it
+leaves no second document if that single one gets challenged. Name a
+second document from the other category, even an imperfect one, rather
+than resting on one. If the person holds truly only 1 usable document,
+say that plainly instead of forcing a second line — "Submit this 1 — no
+document for the other category is in hand yet" — and name what kind of
+document to obtain for the missing category, per the table in "Picking
+the right document set," above.
 
 ### Preparing the portfolio before submitting
 
