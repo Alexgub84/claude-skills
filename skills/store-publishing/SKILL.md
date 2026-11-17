@@ -73,10 +73,21 @@ this skill either work or stall:
   existing.
 - **The right build tooling, on the machine that will actually build the
   app.** This matters by platform, not by preference: **the Apple half —
-  building and signing an iOS app — requires a Mac with Xcode installed.
-  It cannot be done from Windows or Linux, full stop, no workaround.**
-  The Android half has no such limit and builds the same way on Windows,
-  Linux, or macOS.
+  building and signing an iOS app — requires macOS with Xcode installed;
+  the step itself genuinely does not run on Windows or Linux.** The
+  Android half has no such limit and builds the same way on Windows,
+  Linux, or macOS. **Not owning a Mac doesn't end the iOS goal** — it
+  just means getting access to macOS for that one step, the same way
+  the no-website gap below gets handled, not by naming a product but by
+  naming the routes people actually use: borrowed or rented access to
+  someone else's Mac; a cloud macOS machine rented by the hour; a hosted
+  macOS runner inside a continuous-integration service; or, for a React
+  Native or Expo project specifically, a managed cloud build service
+  that produces the signed iOS artifact remotely with no local Mac at
+  all. None of these routes removes the parts that are never about
+  hardware: the paid Apple Developer Program membership is still
+  required, and the account holder still answers Apple's own forms
+  directly (see "Human-only steps," below).
 - **A working, buildable app already.** This skill publishes an app to a
   store; it does not write one. If the app isn't finished and buildable
   today, that's the actual first task, before any of the rest of this
