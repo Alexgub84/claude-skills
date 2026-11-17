@@ -75,6 +75,39 @@ interchangeable steps; the gate sits after both.
    one-time condition per Google's own wording, not a per-release
    requirement.
 
+### EU trader-status declaration (Play Console → Account details)
+
+Google Play has its own trader/non-trader declaration under the EU
+Digital Services Act, separate from Apple's — covered for Apple only
+until now, but required on Play too for distributing there. Google's
+own wording: "All active developer accounts must declare whether they
+are a trader or non-trader under European Economic Area (EEA) and
+United Kingdom (UK) laws in Play Console."
+(https://support.google.com/googleplay/android-developer/answer/17594752?hl=en
+— read 2026-11-17.)
+
+1. **Where**: Play Console → Manage account → Account details → About
+   you → Trader status → Declare your trader status, for the
+   account-level declaration; Play Console → Monitor and improve →
+   Policy and programs → App content confirms the per-app status. —
+   *agent* for navigating and reading the current answer.
+2. **The choice**: trader or non-trader, defined by Google as "any
+   natural or legal person acting for purposes relating to their trade,
+   business, craft or profession." Someone publishing as a hobby, with
+   no commercial purpose, answers non-trader; anyone distributing as
+   part of a business answers trader — the same honesty rule as Apple's
+   version of this question (see "DSA trader-contact verification,"
+   below): a wrong "non-trader" answer to look simpler is a declaration
+   Google can act on, not a shortcut. — *agent* for selecting the
+   answer once the account holder has confirmed which one is true.
+3. **Deadline**: existing accounts must declare by 1 February 2027; a
+   newly created account must declare immediately on creation. A trader
+   declaration also requires verifying a public phone number as part of
+   the same flow. Missing the deadline blocks submitting app updates and
+   removes the developer profile and its apps from Google Play
+   worldwide — treat this as a blocking item, not a someday item, once
+   the account is this close to the deadline.
+
 ## Apple App Store
 
 ### Individual vs. organisation membership

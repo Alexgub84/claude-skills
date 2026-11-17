@@ -77,6 +77,21 @@ App Store Connect's Media Manager renders exactly **one**
 the iPad slot are drop zones only, with no file input behind them
 (dated, witnessed observation, 2026-10-07).
 
+**Required sizes** (portrait; Apple also accepts the landscape
+equivalent, width and height swapped), per Apple's own screenshot
+specifications page
+(https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/
+— read 2026-11-17):
+
+- **iPhone with Dynamic Island (medium display) — required**: 1179 x
+  2556px (or the alternative 1206 x 2622px).
+- **iPhone with Dynamic Island (large display) — optional**: 1290 x
+  2796px or 1320 x 2868px (or the alternative 1260 x 2736px).
+- **iPad, 13" display — required if the app supports iPadOS**: 2048 x
+  2732px (or the alternative 2064 x 2752px).
+- No alpha channel/transparency on any of them; minimum 1, maximum 10
+  screenshots per device size.
+
 - **Required medium-display iPhone slot** — a real file input exists.
   Attach images one at a time through it. — *agent*
 - **Optional large-display iPhone slot** — drop-zone only. A human drags

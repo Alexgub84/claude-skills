@@ -39,28 +39,45 @@ the fact and harder to undo once submitted.
   paste it anywhere outside a secrets manager — and delete any local
   copy pulled in for a single build once that build is done.
 
-## Uploading — prefer an API with no screen at all
+## Uploading — manual upload through the console is the default
 
-Both stores offer a way to get the artifact in without touching a
-browser at all, and both are the preferred route over a browser tool's
-file-attach for anything near real release size:
+**For a first release, upload the build by hand through the console's
+own upload screen.** That's the documented default in this skill: no
+extra tool to install, no credential to set up beforehand, and it's
+what every stranger following this skill already has available the
+moment the account exists. This is a desktop/console step either way —
+the artifact's bytes never go through a browser-automation tool's
+file-attach call (see "Why a browser tool's file-attach is the wrong
+tool," below) — but "console" here means the actual Play Console /
+App Store Connect upload page in a real browser, driven by a human or
+by a connected browser tool, not an API call.
 
-- **Google Play**: the Play Developer API's bundle-upload endpoint
-  (conventionally reached through a script wrapping
-  `edits.bundles.upload` or an equivalent call) needs a service account
-  with the right Play Console permissions, set up once by the account
-  holder, and after that needs no screen and no browser session at all
-  for the artifact itself.
-- **Apple App Store**: the whole Apple side — uploading the build,
-  attaching it to TestFlight groups, submitting Beta App Review, even the
-  version-page submission — is reachable from a terminal through the App
-  Store Connect API with no browser involved. A signed JWT against an API
-  key the account holder generates once is enough for every call after
-  that.
-- Where no API wrapper exists yet, the toolchain's own upload step (an
+### An automated upload is an optional upgrade, once named tools are set up
+
+Once manual upload has worked at least once, switching to a scripted
+upload is a reasonable next step — but only using a real, named tool,
+set up once, ahead of time. Don't promise an upload route this skill
+doesn't actually teach:
+
+- **Google Play**: `fastlane supply` or Gradle Play Publisher. Both
+  need a Google Cloud service-account JSON key, created once in the
+  Google Cloud console for the project linked to the Play Console
+  account, then granted access under Play Console → Users and
+  permissions → Invite new users, with at least Release permission on
+  the app. After that one-time setup, either tool uploads the AAB and
+  can set release notes and track from the command line.
+- **Apple App Store**: `xcrun altool --upload-app`, Apple's Transporter
+  app, or `fastlane deliver` — all need an App Store Connect API key
+  (Users and Access → Integrations → App Store Connect API in App Store
+  Connect), generated once by someone with the Admin role on the
+  account, then used as a `.p8` key file plus its key ID and issuer ID.
+  An Expo project can use `eas submit` instead, which wraps the same
+  App Store Connect API key (and, on Android, the same kind of Google
+  Cloud service-account JSON) under Expo's own CLI.
+- Either way, the toolchain's own upload step (an
   `xcodebuild -exportArchive` with an upload destination, a `fastlane`
   lane, a direct `gradlew`/Play publishing plugin call) is still a
-  desktop step, run from the terminal, not a browser action.
+  desktop step, run from the terminal, never a browser action.
 
 ## Why a browser tool's file-attach is the wrong tool for this specific step
 

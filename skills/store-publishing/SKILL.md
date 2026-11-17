@@ -18,7 +18,7 @@ description: >-
   transfer", "package/bundle id", "developer account", "D-U-N-S". Not
   for backend deploys or web hosting.
 metadata:
-  version: "1.1.0"
+  version: "1.3.0"
   last-walked: "2026-11-08"
 ---
 
@@ -51,6 +51,74 @@ notice — if a step below doesn't match what you see, open an issue in
 this repo rather than guessing, and send a PR with the correction if you
 find one.
 
+## Before you start
+
+Check these before touching a console, out loud if narrating. None of
+them is a technical detail — they're the things that make the rest of
+this skill either work or stall:
+
+- **Something to drive the console with.** Either a browser-automation
+  tool connected to this session, or a human at the keyboard willing to
+  read screens aloud and click where told. Both work — see "Browser
+  mode," right below — but say out loud which one this session actually
+  has before going any further.
+- **Signed in**, already, to whichever console will own this app: Google
+  Play Console (`play.google.com/console`), App Store Connect
+  (`developer.apple.com/account`), or both. A signed-out browser looks
+  exactly like "no account" at a glance — it is not the same thing. See
+  "Signed in or signed out?" below.
+- **A paid developer account, or the intent to pay for one right now,**
+  plus a card to pay with: Google Play is a one-time US$25; Apple is
+  US$99 every year. Nothing past this point moves without the account
+  existing.
+- **The right build tooling, on the machine that will actually build the
+  app.** This matters by platform, not by preference: **the Apple half —
+  building and signing an iOS app — requires a Mac with Xcode installed.
+  It cannot be done from Windows or Linux, full stop, no workaround.**
+  The Android half has no such limit and builds the same way on Windows,
+  Linux, or macOS.
+- **A working, buildable app already.** This skill publishes an app to a
+  store; it does not write one. If the app isn't finished and buildable
+  today, that's the actual first task, before any of the rest of this
+  file applies.
+
+## Intake — ask these before any console work
+
+Four questions are blocking: don't open a console, don't check an
+account state, don't do anything else in this skill until all four are
+answered.
+
+1. **Which store** — Google Play, the Apple App Store, or both?
+2. **First submission for this app, or an update to one already live?**
+3. **Is there a working build already**, and what is it built with —
+   native (Swift/Kotlin), React Native, Flutter, Expo, or a web-app
+   shell? If there's no working build yet, stop here; see "Before you
+   start," above.
+4. **Who owns the developer account, and who holds the signing keys or
+   keystore today?** This skill never takes custody of a signing key or
+   keystore — if nobody present holds them, find out who does before
+   going further.
+
+Everything else below is real, but asking it all up front turns this
+into an interrogation before any work happens. Ask each of these only
+once the step that actually needs it is reached, one question at a
+time, never as a list dumped on the person all at once:
+
+- the exact app name and the bundle id (iOS) / package name (Android) it
+  ships under;
+- individual or organization account — only before account creation
+  itself;
+- the privacy-policy URL — see "No website is not a dead end," below;
+- EU availability, and trader status on *both* stores, not just one —
+  see the Google Play and Apple sections in
+  `reference/developer-account-setup.md`;
+- whether the app sells anything, and whether tax and banking forms are
+  already on file for the account that will sell it;
+- the export-compliance / encryption answer;
+- where the screenshots will come from;
+- which release track: internal testing, closed testing, TestFlight, or
+  straight to production.
+
 ## Browser mode
 
 Two ways to run this skill, chosen by what's actually connected to the
@@ -67,7 +135,13 @@ session — nothing to configure by hand:
 - **No browser-automation tool is connected** — for example, this skill
   uploaded into claude.ai on the web with nothing else attached. Narrate
   every numbered step below for whoever is at the keyboard instead;
-  that's what the rest of this file already reads like.
+  that's what the rest of this file already reads like. Say, in one
+  line, that connecting a browser-automation tool (an extension) to this
+  session would let it drive the console directly instead of narrating.
+  And give the two starting points up front rather than making the
+  person dig for them: Google Play Console at
+  `play.google.com/console`, App Store Connect at
+  `developer.apple.com/account`.
 
 The FIRST line of this skill's first reply in a session states which
 mode is active, in one sentence, before anything else — not "near the
@@ -126,6 +200,16 @@ Opening checklist, in order, even when a user jumps straight to a later
 step like "upload the new build":
 
 - State the browser mode first — see "Browser mode," above.
+- **Confirm the browser is actually signed in before reading any state
+  off it.** A signed-out browser and "no developer account yet" look
+  identical at a glance — both land on a page with no developer profile
+  in sight — but they are not the same thing. If a sign-in / sign-up
+  screen for the account itself appears (not an enrollment page, a plain
+  login), say so plainly — "this browser isn't signed in to Google / the
+  Apple ID that should own this app" — and ask the human to sign in,
+  then re-check, rather than reporting state 1. See "Signed in or
+  signed out?" in `reference/states-and-detection.md` for the exact
+  signals that tell the two apart.
 - Before assuming a first submission or a known rejection, check both
   consoles (or the APIs behind them) directly — every account/app pair
   is in exactly one of eight states, per store, detected per
@@ -152,7 +236,24 @@ that isn't confirmed says so plainly instead of asserting it as settled
 fact.
 
 Report the result of this check in this exact shape, its first line
-always the same mode line as everywhere else in this file:
+always the same mode line as everywhere else in this file, and **only
+the store (or stores) named in answer to intake question 1** — a user
+who said "Google Play" never sees an "Apple App Store" line in this or
+any later report, and the reverse:
+
+```
+Browser mode: <driving | narrating>
+Google Play — account: <state>, app: <state>
+```
+
+or, for an Apple-only answer:
+
+```
+Browser mode: <driving | narrating>
+Apple App Store — account: <state>, app: <state>
+```
+
+or, for "both":
 
 ```
 Browser mode: <driving | narrating>
@@ -218,9 +319,11 @@ Apple App Store — account: <state>, app: <state>
 If the check above found state 1 or state 2 on either store, start here
 before anything else. Full procedure, including the D-U-N-S requirement
 on both stores' organisation tiers, Apple's Individual-vs-Organization
-choice, Apple's DSA trader-contact verification, and Google's personal-
-account tester gate and its own named "developer identity verification"
-step: `reference/developer-account-setup.md`.
+choice, the EU Digital Services Act trader/non-trader declaration on
+**both** Apple (DSA trader-contact verification) and Google Play (its
+own trader-status declaration), and Google's personal-account tester
+gate and its own named "developer identity verification" step:
+`reference/developer-account-setup.md`.
 
 ## 2. First-time setup checklist (once the account is ready — state 3)
 
@@ -233,12 +336,19 @@ Do these in order; each one unblocks the next.
    service when submitted under an account holding many unrelated
    products, and separately expects the IP owner to be the one
    submitting (guideline 5.2.1).
-2. **Legal pages live on the production domain**: a privacy policy,
-   terms of use, and an account-deletion page if the app allows sign-up.
-   Both stores ask for these URLs; Google's Data Safety form links the
-   deletion page directly. Get sign-off on the legal text from whoever
-   owns the product before using it in a submission — it's a business
-   decision, not a technical one.
+2. **A reachable privacy-policy URL** (and an account-deletion page URL
+   if the app allows sign-up). Both stores require these URLs; Google's
+   Data Safety form links the deletion page directly. **Ask whether one
+   already exists before assuming it does — never assume there's a
+   production domain or a backend at all.** A first-time solo publisher
+   often has neither. When there's no site yet, say plainly that any
+   publicly reachable static page satisfies both stores — it doesn't
+   need to be fancy or on a branded domain — and name the simplest
+   routes without recommending a particular vendor: a static host, a
+   source-control pages site, or a one-page hosted-doc link all work, as
+   long as the URL loads for anyone, with no login. Get sign-off on the
+   legal text itself from whoever owns the product before using it in a
+   submission — it's a business decision, not a technical one.
 3. **A real app icon**, not a framework default — both stores reject or
    flag an unchanged default icon as low-quality.
 4. **A review demo account**, if the app requires sign-in: a fixed
@@ -297,6 +407,25 @@ same ladder as a first-time app, re-entering at state 4 or 5.
 
 ### Preconditions (stop if any of these fails)
 
+Every check below means actually reading the real, current value off
+the console (or the API behind it) — not trusting memory, not trusting
+what the last release's notes said, not assuming it still holds:
+
+- **Read the last shipped version/build number off the console itself**,
+  then confirm the new one is strictly higher on each platform — don't
+  compute "last + 1" from memory; read it.
+- **Read the bundle id / package name the console actually has on
+  record for this app**, and diff it against the project's own value —
+  don't assume they still match.
+- **Read the account's current standing**: agreements in effect,
+  membership not expired, account in a ready (not pending/restricted)
+  state, on each store being used.
+- **If the app sells anything**, confirm tax and banking are complete
+  and current on the account that will receive the payout — not just
+  "were complete once."
+- **Re-check the data-safety / app-privacy answers against what the app
+  actually collects today**, not only against the last recorded
+  inventory diff (see `reference/forms-data-safety-and-privacy.md`).
 - The code being shipped is actually deployed to production, with any
   database migrations already applied — a deploy and a migration are
   not the same step.
@@ -307,8 +436,15 @@ same ladder as a first-time app, re-entering at state 4 or 5.
 - **Apple's version slot is free** — see "Never," above, and
   `reference/screens-app-store-connect.md` for the "Pending Developer
   Release blocks the next version" trap.
-- Build number = last shipped + 1 on each platform; the version string
-  only bumps for a change a user would actually notice.
+- **Android's target API level**: read Play's currently-required
+  minimum `targetSdkVersion` and confirm the build being uploaded meets
+  it — Play refuses an upload below the current floor.
+- **Screenshot and icon dimensions**: read the exact pixel sizes
+  required today from `reference/screens-play-console.md` and
+  `reference/screens-app-store-connect.md`, and confirm every file about
+  to be uploaded matches one of the accepted sizes before attaching it.
+- The version string only bumps for a change a user would actually
+  notice — a build-number-only bump doesn't need a new version string.
 
 ### Release notes
 

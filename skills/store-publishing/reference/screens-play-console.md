@@ -100,6 +100,16 @@ doing deliberately rather than by habit. — *agent*
 - Graphics: feature graphic, app icon. — *agent* (the agent attaches a
   file a human already prepared; it never designs or edits the image
   itself).
+  - **App icon**: 512px by 512px, 32-bit PNG with alpha, max 1024KB.
+  - **Feature graphic**: 1024px by 500px, JPEG or 24-bit PNG with no
+    alpha.
+  - **Phone screenshots**: every side between 320px and 3,840px, long
+    side no more than twice the short side; at least 2 required, 8
+    maximum. 1080 x 1920px (9:16 portrait) or 1920 x 1080px (16:9
+    landscape) is the commonly used size and satisfies the large-format
+    minimum of at least four screenshots at 1080px or higher.
+    (https://support.google.com/googleplay/android-developer/answer/9866151?hl=en
+    — read 2026-11-17.)
 - **★ Store-listing screenshots are human-only.** The listing's
   screenshot area carries no `input[type=file]` anywhere in its DOM,
   shadow roots included — the upload control opens a native OS file
@@ -144,10 +154,12 @@ doing deliberately rather than by habit. — *agent*
 ## General console mechanics worth expecting
 
 - **The console can render in whatever language the account's locale is
-  set to, Hebrew included.** Quote the console's own on-screen string in
-  any report, with a translation alongside — don't silently translate it
-  away, since the exact string is what the next session needs to match
-  against this file or against a rejection email.
+  set to** — it may not be English. Match on screen position and icon,
+  not on the English label this file uses. Quote the console's own
+  on-screen string in any report, with an English translation
+  alongside — don't silently translate it away, since the exact string
+  is what the next session needs to match against this file or against
+  a rejection email.
 - A page that sits on a spinner after navigation sometimes renders only
   after the same left-nav item is clicked a second time.
 - Direct deep-link URLs into a specific testing track have been seen

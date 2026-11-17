@@ -36,6 +36,26 @@ two.
           (next version needed → back to state 4/5)
 ```
 
+## Signed in or signed out?
+
+Before reading any row below, settle this first: is the browser actually
+signed in to the identity that should own this app, on each console?
+**A signed-out browser is not the same thing as "no developer account
+yet" — don't let the two look identical.**
+
+| Store | A signed-out session shows | How it differs from genuine state 1 |
+| --- | --- | --- |
+| Google Play | A Google account sign-in page (email/password or account picker), at `accounts.google.com`, before `play.google.com/console` ever loads anything console-shaped. | State 1's sign-up/enrollment page only appears *after* a Google identity is already signed in — if the page in front of you is Google's own account chooser or password prompt, nobody is signed in yet; that is not a verdict about whether a developer account exists. |
+| Apple App Store | An Apple ID sign-in page (email/password, then two-factor), before `developer.apple.com/account` loads an enrollment or dashboard page. | State 1's enrollment page only appears once an Apple ID is already signed in. A password or two-factor prompt in front of you means nobody is signed in — say so and stop, rather than reporting no membership. |
+
+If a sign-in screen appears, in either browser mode: say plainly that
+the session isn't signed in yet, name which console, and ask the human
+to sign in (this is a password/credential step — see "Human-only
+steps" in `SKILL.md`). Re-check only after they confirm they're signed
+in. Reporting state 1 off a sign-in screen is a wrong reading, not a
+harmless shortcut — it can send the rest of the session into account
+creation for an account that already exists.
+
 Every row below names: what the state looks like in each console, whether
 a live Apple/Google doc page confirms the exact on-screen wording (with
 the URL and the date it was read), and where it doesn't, that it doesn't
