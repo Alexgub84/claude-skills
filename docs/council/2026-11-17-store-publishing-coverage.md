@@ -1,7 +1,7 @@
 # Council: store-publishing-coverage
 
 - Date: 2026-11-17
-- Cwd: `/Users/alexguberman/Projects/claude-skills`
+- Cwd: `<project>/claude-skills`
 - Seats: openai/gpt-6.1-sol, google/gemini-4-argon, x-ai/grok-4.7, moonshotai/kimi-k3
 - Chairman: the calling Claude session
 
@@ -555,7 +555,7 @@ Nothing currently in the skill instructs a harmful act — the human-only list, 
 
 ## Trace
 
-Trace: `/Users/alexguberman/.claude/council/logs/2026-11-17-store-publishing-coverage.jsonl`
+Trace: `~/.claude/council/logs/2026-11-17-store-publishing-coverage.jsonl`
 
 | Seat | Round | Response ID | Status | Latency (ms) |
 |---|---|---|---|---|
