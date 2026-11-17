@@ -36,16 +36,24 @@ mention at all.
 - **The 12-tester/14-day closed-testing gate** applies, by Google's own
   wording, to "personal developer accounts created after November 13,
   2023" — a minimum of 12 testers opted in continuously for at least 14
-  days before production access is granted
+  days, **then applying for production access on that specific app's
+  own Dashboard**
   (https://support.google.com/googleplay/android-developer/answer/14151465 —
-  read 2026-11-11). **On the organisation exemption specifically:** that
-  page never uses the word "exempt" for organisation accounts — it only
-  ever scopes the requirement to personal accounts. Treat "an
-  organisation account doesn't face this gate" as this skill's own
-  inference from that scoping (an organisation account is, by definition,
-  not a personal account created after that date), not as a sentence
-  Google's page states outright. If this matters for a real decision,
-  confirm current wording in-console before relying on the inference.
+  read 2026-11-17). **This is per app, not per account** — the live
+  page never says a granted application carries to a second app, so
+  don't tell a developer shipping their second app that the gate is
+  already cleared; each app runs its own closed test and its own
+  application. Full detail, including what stays disabled until the
+  gate clears and what can send an application back for continued
+  testing: `screens-play-console.md`. **On the organisation exemption
+  specifically:** that page never uses the word "exempt" for
+  organisation accounts — it only ever scopes the requirement to
+  personal accounts. Treat "an organisation account doesn't face this
+  gate" as this skill's own inference from that scoping (an
+  organisation account is, by definition, not a personal account
+  created after that date), not as a sentence Google's page states
+  outright. If this matters for a real decision, confirm current
+  wording in-console before relying on the inference.
 
 ### What to do, in order
 
@@ -64,16 +72,52 @@ interchangeable steps; the gate sits after both.
 3. The account is verified — state 3 begins. Create the app record (see
    `screens-play-console.md`), then walk it through to a build uploaded
    for testing (states 4 and 5 in `states-and-detection.md`).
-4. **If a personal account**: open a closed test on that app, with the
-   minimum tester count opted in continuously for the required number of
-   days before production access is granted
-   (https://support.google.com/googleplay/android-developer/answer/14151465
-   — read 2026-11-11, cited above). Setting up the track, the tester list
-   and the release is agent-drivable; clearing the continuous-days
+4. **If a personal account**: open a closed test on **this specific
+   app**, with the minimum tester count opted in continuously for the
+   required number of days. Setting up the track, the tester list and
+   the release is agent-drivable; clearing the continuous-days
    requirement is a matter of time, not a click.
-5. Once the gate clears, apply for production access for that app — a
-   one-time condition per Google's own wording, not a per-release
-   requirement.
+5. **Apply for production access on this app's own Dashboard** — not an
+   account-wide switch; a second app repeats steps 4 and 5 on its own,
+   even on the same account. Google's own review of the application
+   "usually takes seven days or less," and can send the app back for
+   continued testing if fewer than 12 testers stayed opted in or
+   engagement was judged insufficient. See "The 12-tester/14-day
+   closed-testing gate," above, and `screens-play-console.md` for the
+   full citation.
+
+### EU trader-status declaration (Play Console → Account details)
+
+Google Play has its own trader/non-trader declaration under the EU
+Digital Services Act, separate from Apple's — covered for Apple only
+until now, but required on Play too for distributing there. Google's
+own wording: "All active developer accounts must declare whether they
+are a trader or non-trader under European Economic Area (EEA) and
+United Kingdom (UK) laws in Play Console."
+(https://support.google.com/googleplay/android-developer/answer/17594752?hl=en
+— read 2026-11-17.)
+
+1. **Where**: Play Console → Manage account → Account details → About
+   you → Trader status → Declare your trader status, for the
+   account-level declaration; Play Console → Monitor and improve →
+   Policy and programs → App content confirms the per-app status. —
+   *agent* for navigating and reading the current answer.
+2. **The choice**: trader or non-trader, defined by Google as "any
+   natural or legal person acting for purposes relating to their trade,
+   business, craft or profession." Someone publishing as a hobby, with
+   no commercial purpose, answers non-trader; anyone distributing as
+   part of a business answers trader — the same honesty rule as Apple's
+   version of this question (see "DSA trader-contact verification,"
+   below): a wrong "non-trader" answer to look simpler is a declaration
+   Google can act on, not a shortcut. — *agent* for selecting the
+   answer once the account holder has confirmed which one is true.
+3. **Deadline**: existing accounts must declare by 1 February 2027; a
+   newly created account must declare immediately on creation. A trader
+   declaration also requires verifying a public phone number as part of
+   the same flow. Missing the deadline blocks submitting app updates and
+   removes the developer profile and its apps from Google Play
+   worldwide — treat this as a blocking item, not a someday item, once
+   the account is this close to the deadline.
 
 ## Apple App Store
 
@@ -144,6 +188,44 @@ will sell anything (one-time purchases, subscriptions, or in-app
 purchases): legal entity name, tax forms, and bank account details for
 payouts, all account-holder material — never something this skill types
 in on its own initiative, and never something it holds onto afterward.
+
+## An app that sells anything: products must exist before review
+
+**Tax and banking being complete does not create a purchasable
+product, and this skill previously stopped at "are tax and banking on
+file" as if that were the whole check.** If the app sells anything
+in-app — a one-time purchase, a consumable, or a subscription — none
+of the following is optional before a first submission, on either
+store, and each is worth checking before the build is even submitted,
+not discovered after a rejection:
+
+1. **The product(s) themselves must actually exist in the console**,
+   with the right identifier (matching what the code references) and
+   the right type (consumable, non-consumable, auto-renewing
+   subscription, non-renewing subscription), before the app version is
+   submitted.
+2. **On Apple**, a first-submission app with in-app purchases has its
+   products reviewed *together with* the app binary — the products
+   need to be in "Ready to Submit" status and explicitly attached to
+   the version being submitted; a subscription additionally needs a
+   subscription group with its own localized name and description.
+   Leaving products unattached, or in a draft status, is a common,
+   avoidable first-submission rejection.
+3. **On Google Play**, the Monetize → Products screens for in-app
+   products and subscriptions don't fully activate until **a build
+   containing the Play Billing Library has already been uploaded** to
+   at least an internal or closed track. Trying to configure products
+   before that upload is in place is working out of order.
+4. **Try a real sandbox purchase and a restore**, against the actual
+   build being submitted, before submitting — Apple's sandbox
+   environment and Play's license testers both exist for exactly this,
+   and "the code compiles" is not the same claim as "a purchase
+   actually completes and a restore actually works."
+5. **Selling digital goods or functionality outside the store's own
+   billing**, where the store's rules require using it (Apple
+   guideline 3.1.1 in particular), is itself a common rejection reason —
+   confirm which payment model the app is actually allowed to use on
+   each store before building the purchase flow around it, not after.
 
 ---
 Source: generalized from a private, account-specific runbook, as of

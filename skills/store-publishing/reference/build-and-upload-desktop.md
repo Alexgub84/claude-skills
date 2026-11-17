@@ -2,9 +2,11 @@
 
 Last reviewed: 2026-11-08.
 
-The build and the upload of the actual binary are **desktop steps** —
-run from a terminal, never through a browser tool, in either browser
-mode. When no terminal is reachable in a session, narrate the commands
+The build is always a desktop step — run from a terminal, never through
+a browser-automation tool, in either browser mode. **The upload differs
+by platform, and the two are not interchangeable: Play has a genuine
+browser upload page; Apple does not.** See "Uploading," below, for the
+split. When no terminal is reachable in a session, narrate the commands
 below for whoever is at one instead of trying to route the artifact
 itself through a browser-automation file-attach call.
 
@@ -34,33 +36,107 @@ the fact and harder to undo once submitted.
   dropped. Where the product has one shared version string across
   platforms, keep iOS and Android on the same build/version number, so a
   support conversation about "version 2.3" means the same thing on both.
-- The signing keystore (Android) and its password belong to whoever owns
-  the account. Never commit it to a repository, never log it, never
-  paste it anywhere outside a secrets manager — and delete any local
-  copy pulled in for a single build once that build is done.
+- **The signing keystore (Android) and its password belong to whoever
+  owns the account.** Never commit it to a repository, never log it,
+  never paste it anywhere outside a secrets manager. **Never delete a
+  local keystore copy as routine cleanup.** A solo developer with no
+  other copy who deletes it has just made their own app permanently
+  unupdatable — there is no "regenerate" for a lost signing key. The
+  correct order is: back the keystore up to a password manager or
+  secrets manager first, confirm that backup actually restores (open it
+  back up from the backup, don't just trust that the copy step
+  succeeded), and only then delete a *temporary* copy that was pulled
+  onto a disposable build machine or CI runner for a single build —
+  never the one durable copy. This distinguishes two different keys
+  with two different recovery paths:
+  - **The upload key** (used to sign the AAB handed to Google) — if
+    it's lost or compromised and the app is enrolled in Play App
+    Signing, Google's own "Request upload key reset" flow in Play
+    Console → Setup → App signing replaces it without losing the app;
+    not enrolling first is what makes this unrecoverable.
+  - **The app-signing key itself** — Play-managed (Google holds it once
+    enrolled in Play App Signing; recoverable through Google's own
+    process) versus self-managed (the developer holds the only copy;
+    losing it with no backup means the app can never receive an
+    in-place update again, full stop — a brand-new package name and
+    listing is the only route forward, per §6 in `SKILL.md`).
 
-## Uploading — prefer an API with no screen at all
+## Uploading — the default splits by platform
 
-Both stores offer a way to get the artifact in without touching a
-browser at all, and both are the preferred route over a browser tool's
-file-attach for anything near real release size:
+**The two stores are not symmetric here, and treating them as if they
+were strands an Apple-only reader on a step that doesn't exist: Play
+has a genuine browser upload page; App Store Connect does not have one
+for a build at all.** This corrects an earlier version of this skill
+that named "manual console upload" as the default for both — right for
+Play, impossible for Apple.
 
-- **Google Play**: the Play Developer API's bundle-upload endpoint
-  (conventionally reached through a script wrapping
-  `edits.bundles.upload` or an equivalent call) needs a service account
-  with the right Play Console permissions, set up once by the account
-  holder, and after that needs no screen and no browser session at all
-  for the artifact itself.
-- **Apple App Store**: the whole Apple side — uploading the build,
-  attaching it to TestFlight groups, submitting Beta App Review, even the
-  version-page submission — is reachable from a terminal through the App
-  Store Connect API with no browser involved. A signed JWT against an API
-  key the account holder generates once is enough for every call after
-  that.
-- Where no API wrapper exists yet, the toolchain's own upload step (an
+### Google Play's default: upload by hand through the console
+
+**For a first Play release, upload the AAB by hand through Play
+Console's own upload screen.** No extra tool to install, no credential
+to set up beforehand — what every stranger following this skill already
+has the moment the account exists. This is a human click, in both
+browser modes, with no exception: **the artifact's bytes never go
+through a browser-automation tool's file-attach call** (see "Why a
+browser tool's file-attach is the wrong tool," below). With a browser
+tool connected, this is the one console action in this skill's whole
+Play flow that still gets handed to the human rather than clicked by
+the agent — the human opens the real Play Console upload screen in
+their own browser and selects the file from disk themselves; the agent
+resumes driving everything around it (release notes, declarations, the
+rest of the release flow) once the file has landed.
+
+### Apple's default: the toolchain itself — there is no browser route
+
+**App Store Connect has no page where a human (or an agent) drags or
+selects an IPA to upload it.** The only routes onto Apple's servers are
+desktop tools talking to Apple's own upload service directly, so one of
+these is the default, not an upgrade, for every Apple release, first or
+repeat:
+
+- **Xcode Organizer's "Distribute App"** — the built-in route when the
+  archive step itself ran on a Mac: Window → Organizer → select the
+  archive → Distribute App → App Store Connect → Upload.
+- **Transporter** — Apple's own free upload app (Mac App Store), for
+  uploading an already-exported `.ipa` without reopening Xcode.
+- **`xcrun altool --upload-app`** — the command-line route, usable from
+  any script or CI job that already has the signed `.ipa` and an App
+  Store Connect API key.
+
+**For a reader with no Mac**, this is exactly where the no-Mac routes
+named in "Before you start" (in `SKILL.md`) matter in practice: a
+borrowed/rented Mac, a cloud macOS machine, or a hosted macOS CI runner
+can run any of the three tools above; or, for a React Native/Expo
+project, a managed cloud build service (`eas submit`, for instance)
+produces the signed artifact **and** performs this exact upload
+remotely, with no local Mac and no local Xcode/Transporter/`altool`
+step at all.
+
+### An automated upload is an optional upgrade — on Play only
+
+Once Play's manual upload has worked at least once, switching to a
+scripted upload is a reasonable next step on Play — but only using a
+real, named tool, set up once, ahead of time:
+
+- **Google Play**: `fastlane supply` or Gradle Play Publisher. Both
+  need a Google Cloud service-account JSON key, created once in the
+  Google Cloud console for the project linked to the Play Console
+  account, then granted access under Play Console → Users and
+  permissions → Invite new users, with at least Release permission on
+  the app. After that one-time setup, either tool uploads the AAB and
+  can set release notes and track from the command line.
+- There's no equivalent "upgrade" framing on Apple's side, because the
+  toolchain route above already *is* the default, not a fallback.
+  `fastlane deliver` (wrapping `altool`) or `eas submit` just add
+  convenience — release notes, track selection, metadata — on top of
+  the same App Store Connect API key (Users and Access → Integrations →
+  App Store Connect API in App Store Connect; generated once by someone
+  with the Admin role, used as a `.p8` key file plus its key ID and
+  issuer ID).
+- Either way, the toolchain's own upload step (an
   `xcodebuild -exportArchive` with an upload destination, a `fastlane`
-  lane, a direct `gradlew`/Play publishing plugin call) is still a
-  desktop step, run from the terminal, not a browser action.
+  lane, a direct `gradlew`/Play publishing plugin call) is a desktop
+  step, run from a terminal, never a browser action, on both platforms.
 
 ## Why a browser tool's file-attach is the wrong tool for this specific step
 
