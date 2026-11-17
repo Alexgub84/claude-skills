@@ -82,16 +82,30 @@ accepting it.
   audience and age, government-apps declaration, financial-features
   declaration, health declaration, Data safety (from the data inventory —
   see `forms-data-safety-and-privacy.md`), advertising ID declaration. —
-  *agent* for every field and select; the actual truthful answers come
-  from the product's own data inventory and behaviour, never invented.
+  *agent* for navigating to each field and entering the selection, once
+  the human has actually given the answer. **The content rating,
+  target audience, government-apps, financial-features, and health
+  questionnaires are never answered on the agent's own judgement** —
+  these are legal/policy attestations, not facts to infer from a data
+  inventory alone; read the question to the human and enter only what
+  they confirm (see `forms-data-safety-and-privacy.md` and "Never" in
+  `SKILL.md`). If the target audience includes children, stop first —
+  see the children/regulated-category flag in `SKILL.md`.
 
 ## Play App Signing
 
 Enroll so Google holds the app signing key and the upload key stays
-replaceable if it's ever lost. A one-time, reversible-consequence
-checkbox/agreement click on the account's own signing setup — not one of
-the presses `SKILL.md`'s "Never" section pauses for, but still worth
-doing deliberately rather than by habit. — *agent*
+replaceable if it's ever lost. **This is a human-only decision, not an
+agent click** — it's an agreement, and it's effectively permanent for
+this app once accepted, the same class of action as the other legal
+acceptances in `SKILL.md`'s "Human-only steps." Explain the consequence
+before the human decides: Google will hold the app-signing key from
+here on (not the account holder), and in exchange, a lost or
+compromised *upload key* becomes recoverable through Google's own
+upload-key-reset flow instead of ending the app's updatability — see
+`reference/build-and-upload-desktop.md`. — *human* for the actual
+accept click, once the consequence has been explained; *agent* for
+navigating to the screen and reading its current state.
 
 ## Store listing
 
@@ -135,6 +149,13 @@ doing deliberately rather than by habit. — *agent*
   — *agent*
 - App content declarations, re-checked against the current data
   inventory if it changed since the last release. — *agent*
+- **Once the build finishes processing, check Testing → Pre-launch
+  report before promoting it further.** Google runs the uploaded build
+  automatically on real test devices and flags startup crashes and
+  other failures there — reading it before moving on catches a crash a
+  human reviewer would otherwise catch instead, costing a review
+  cycle. — *agent* to open and read it, flag anything red before
+  continuing.
 - "Review release" — reading the summary before the next click. — *agent*
 - **"Start rollout"** — one of the four presses `SKILL.md`'s "Never"
   section pauses for; see that section for the single statement of the

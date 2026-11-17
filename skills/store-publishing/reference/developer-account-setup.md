@@ -178,6 +178,44 @@ purchases): legal entity name, tax forms, and bank account details for
 payouts, all account-holder material — never something this skill types
 in on its own initiative, and never something it holds onto afterward.
 
+## An app that sells anything: products must exist before review
+
+**Tax and banking being complete does not create a purchasable
+product, and this skill previously stopped at "are tax and banking on
+file" as if that were the whole check.** If the app sells anything
+in-app — a one-time purchase, a consumable, or a subscription — none
+of the following is optional before a first submission, on either
+store, and each is worth checking before the build is even submitted,
+not discovered after a rejection:
+
+1. **The product(s) themselves must actually exist in the console**,
+   with the right identifier (matching what the code references) and
+   the right type (consumable, non-consumable, auto-renewing
+   subscription, non-renewing subscription), before the app version is
+   submitted.
+2. **On Apple**, a first-submission app with in-app purchases has its
+   products reviewed *together with* the app binary — the products
+   need to be in "Ready to Submit" status and explicitly attached to
+   the version being submitted; a subscription additionally needs a
+   subscription group with its own localized name and description.
+   Leaving products unattached, or in a draft status, is a common,
+   avoidable first-submission rejection.
+3. **On Google Play**, the Monetize → Products screens for in-app
+   products and subscriptions don't fully activate until **a build
+   containing the Play Billing Library has already been uploaded** to
+   at least an internal or closed track. Trying to configure products
+   before that upload is in place is working out of order.
+4. **Try a real sandbox purchase and a restore**, against the actual
+   build being submitted, before submitting — Apple's sandbox
+   environment and Play's license testers both exist for exactly this,
+   and "the code compiles" is not the same claim as "a purchase
+   actually completes and a restore actually works."
+5. **Selling digital goods or functionality outside the store's own
+   billing**, where the store's rules require using it (Apple
+   guideline 3.1.1 in particular), is itself a common rejection reason —
+   confirm which payment model the app is actually allowed to use on
+   each store before building the purchase flow around it, not after.
+
 ---
 Source: generalized from a private, account-specific runbook, as of
 2026-11-08 (DSA procedure and field shapes), with every policy and

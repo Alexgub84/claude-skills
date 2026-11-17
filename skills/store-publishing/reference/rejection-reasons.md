@@ -8,19 +8,36 @@ rejection ever happens.
 
 ## The review account
 
-- App Review notes (Apple) or App access instructions (Play) need to
-  explain, every time: exactly how to log in (identifier format, the
-  fixed code or password, confirmation that no real message is sent),
-  what the reviewer lands on after logging in, where the core flows
-  live, why there's no public sign-up if that's genuinely the case
-  (accounts issued by a business process rather than self-serve — cite
-  the relevant guideline if Apple asks), what each requested permission
-  is actually for, and what any "delete account" action does to a
-  shared review account.
-- Store the credential itself somewhere outside the console pages —
-  never as plain text pasted into App Review notes, where it becomes a
-  permanent, widely-readable record. Verify the login works against the
-  exact build being submitted, every time, right before submitting.
+**Two different things live in two different places, and confusing
+them is what causes a rejection:**
+
+- **The credential itself — username and password/fixed code — goes
+  into the store's own dedicated reviewer field**: Apple's "Sign-In
+  required" username/password fields on App Review Information; Play's
+  App access username/password fields. These exist specifically so a
+  reviewer can log in; that is exactly where a reviewer looks, so a
+  credential kept "somewhere else, for safety" simply isn't found and
+  earns a rejection for inaccessible functionality. The human types it
+  into those fields directly — a password never moves through an
+  automated fill call (see "Human-only steps" in `SKILL.md`). The
+  canonical copy of the credential still lives in the team's own
+  secrets manager, never in a public listing field, shell history, a
+  log, a repository, or a continuous-integration artifact — "the
+  reviewer field" and "a public field" are not the same thing.
+- **The free-text notes field** (Apple's Review Notes; Play's App
+  access instructions text box) is different: it explains, every
+  time, exactly how to log in (identifier format, confirmation that no
+  real message is sent), what the reviewer lands on after logging in,
+  where the core flows live, why there's no public sign-up if that's
+  genuinely the case (accounts issued by a business process rather
+  than self-serve — cite the relevant guideline if Apple asks), what
+  each requested permission is actually for, and what any "delete
+  account" action does to a shared review account. The password itself
+  still never gets pasted into this free-text box even though the box
+  is right next to the dedicated field — it belongs in the dedicated
+  username/password field only.
+- Verify the login works against the exact build being submitted,
+  every time, right before submitting.
 - **If the reviewer's login fails, fix the backend or the credential
   itself — never swap the demo identifier or its code to something new
   in the console as a workaround.** Rotating it there just produces a
@@ -38,6 +55,7 @@ rejection ever happens.
 | A default or unchanged app icon | Ship a real one — both stores flag an unchanged framework default |
 | "Where's the sign-up flow?" | Explain the company-issued-account model in App Review notes if that's genuinely how the app works, citing the relevant guideline |
 | A permission the app requests with no explanation in the privacy forms | Add the explanation, or remove the permission if it isn't actually used |
+| A website repackaged in a plain WebView, with no native platform integration | Apple's guideline 4.2 (Minimum Functionality) rejects a wrapper that reads as a mobile website rather than an app — add genuine native features (push, offline behaviour, native navigation) before resubmitting, or expect this rejection on Apple even though the same build is usually fine on Play |
 
 ## Apple's resubmission sequencing trap
 

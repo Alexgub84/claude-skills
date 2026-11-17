@@ -54,8 +54,13 @@ route for almost everything below the listing itself; see
 ## The version page
 
 - App Information: category, content rights, age rating questionnaire. —
-  *agent* for the fields; the truthful answers come from the app's actual
-  behaviour.
+  *agent* for navigating the fields and entering the selection, once the
+  human has given the actual answer. **The age rating questionnaire,
+  including its children/social-capability questions, is never answered
+  on the agent's own judgement** — read each question to the human and
+  enter only what they confirm (see "Never" in `SKILL.md`). If the
+  audience includes children, stop first — see the children/regulated-
+  category flag in `SKILL.md`.
 - App Privacy labels, from the data inventory (see
   `forms-data-safety-and-privacy.md`). — *agent*
 - Pricing and availability, countries. — *agent*
@@ -63,11 +68,20 @@ route for almost everything below the listing itself; see
   check the current limit in-console, it has moved), support URL,
   copyright, release option (manual release keeps the "go live" moment
   separate from "approved" — the safer default). — *agent*
-- App Review Information: sign-in instructions if the app needs them,
-  review contact, notes (see `rejection-reasons.md` for what these notes
-  need to cover). — *agent* for drafting and entering the text; a demo
-  credential's password is never pasted here in plain text where it
-  becomes a permanent console record (see "Never" in `SKILL.md`).
+- App Review Information has two different kinds of field, and they
+  are not interchangeable: the **"Sign-In required" username and
+  password fields** are the dedicated reviewer-login fields — the demo
+  account's credential belongs directly in those two fields, because
+  that's exactly where a reviewer looks (see `rejection-reasons.md`).
+  The **Notes** free-text box is separate: review contact, how to log
+  in conceptually, what the reviewer lands on, why there's no public
+  sign-up if that's genuinely how the app works. — *agent* for drafting
+  and entering the Notes text and for navigating to the Sign-In
+  required fields; the human types the actual username and password
+  into those two fields themselves, every time (a password never moves
+  through an automated fill call — see "Human-only steps" in
+  `SKILL.md`), and it never gets pasted into the Notes box even though
+  the two sit right next to each other.
 
 ## ★ Screenshots — a real file input on one slot only
 
@@ -113,9 +127,13 @@ specifications page
 
 ## TestFlight
 
-- Attach the new build; answer the export-compliance question (or rely
-  on `ITSAppUsesNonExemptEncryption=false` in Info.plist if that's
-  genuinely true, to stop the question recurring). — *agent*
+- Attach the new build; answer the export-compliance question from the
+  actual encryption inventory (see
+  `forms-data-safety-and-privacy.md`) — never a guess — or rely on
+  `ITSAppUsesNonExemptEncryption=false` in Info.plist when the inventory
+  genuinely says no encryption beyond standard HTTPS, to stop the
+  question recurring. — *agent* to select the answer once the human has
+  confirmed it from that inventory.
 - "What to Test" text. — *agent*
 - A build with **Missing Compliance** showing has not had the export
   question answered yet; it won't distribute to a group until it is.
@@ -124,8 +142,9 @@ specifications page
 
 - Export-compliance answer on the version page, or the Info.plist flag
   set once at build time (a build/desktop step — see
-  `build-and-upload-desktop.md`). — *agent* for the console answer,
-  *desktop* for the Info.plist route.
+  `build-and-upload-desktop.md`), from the same encryption inventory,
+  never invented. — *agent* for entering the console answer once the
+  human has confirmed it, *desktop* for the Info.plist route.
 - Selecting the build on the version page. — *agent*
 
 ## Submitting

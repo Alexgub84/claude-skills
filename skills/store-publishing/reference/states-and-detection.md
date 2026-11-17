@@ -56,11 +56,74 @@ in. Reporting state 1 off a sign-in screen is a wrong reading, not a
 harmless shortcut — it can send the rest of the session into account
 creation for an account that already exists.
 
-Every row below names: what the state looks like in each console, whether
-a live Apple/Google doc page confirms the exact on-screen wording (with
-the URL and the date it was read), and where it doesn't, that it doesn't
-— per the rule that nothing from a private, unwitnessed assumption gets
-presented as a confirmed fact.
+## Which role, and is the account holder reachable?
+
+Being signed in is not the same as having authority. Right after
+confirming signed-in status, confirm: which developer account or team
+is actually selected (an identity can belong to more than one), what
+role does the person at the keyboard hold on it, and — if that role
+turns out not to be enough — is the account holder actually reachable
+today?
+
+This matters because the two stores hide different buttons for
+different roles, and a missing button is easy to misread as a missing
+app or a broken page:
+
+- **Apple**: accepting any legal agreement, enrolling in a Paid Apps
+  Agreement, or setting up tax and banking requires the **Account
+  Holder** specifically — not even an Admin can sign these on the
+  Account Holder's behalf. Creating an app record or releasing to
+  production needs Admin, App Manager, or Release Manager. A
+  Developer- or Marketer-role sign-in simply doesn't show these
+  screens at all; it isn't a bug and it isn't state 1.
+- **Google Play**: an invited user without Admin (all permissions)
+  access won't see "Users and permissions," "API access," or some
+  financial screens, depending on what was granted.
+
+**If an expected screen or button isn't there, don't conclude the app
+or the account is missing — check the role first.** If the signed-in
+person's role genuinely doesn't cover the step at hand, stop and
+escalate to the account holder by name rather than continuing to hunt
+for a workaround.
+
+## Restricted or recovery required — a state that stops the ladder
+
+A console can show something that is neither "pending" (state 2) nor a
+normal app rejection (state 7): the account itself is suspended,
+terminated, or stuck in identity verification with no obvious retry.
+**This stops the ladder.** Don't assign it one of the eight states
+below, and don't treat it as a routine rejection to resubmit past.
+
+| Store | What it looks like | Wording confirmed? |
+| --- | --- | --- |
+| Google Play | A red banner naming the account **suspended** or **terminated**, or an identity-verification step that has sat "pending" with no further action available. | Confirmed for the suspended/terminated distinction: "When your developer account is terminated, all apps in your catalog will be removed from Google Play and you will no longer be able to publish new apps," and, on opening a replacement account specifically: "Any new account that you try to open will be terminated as well (without a refund of the developer registration fee)." (https://support.google.com/googleplay/android-developer/answer/9899234?hl=en — read 2026-11-17.) |
+| Apple App Store | A membership shown as terminated, or identity verification that has been denied with no further prompt to correct it (common cause: the same government-ID identity was already verified under a different Apple Account — Apple ties verified identity to one Account and will not re-verify it on a second one). | Not confirmed against a single live Apple status page found for this exact banner text — this skill's direct reading of Apple's own developer-forum guidance on identity verification and membership termination, not a quoted doc sentence. Treat the on-screen wording as the signal and quote it exactly in any report. |
+
+What to do, in either browser mode, the moment this is detected:
+
+1. **Stop. Don't continue down the eight-state ladder** for this
+   account — nothing below this point applies until the restriction
+   clears.
+2. **Preserve the exact notice** — its text, any scope it states (one
+   app versus the whole account), any deadline, and any case or
+   reference ID. Don't paraphrase it away.
+3. **Identify what the notice says an owner or admin must do** — which
+   is sometimes nothing but "wait," and sometimes a specific appeal
+   form or document request.
+4. **Use the store's own official appeal or support channel** named in
+   the notice — never a generic contact form guessed at.
+5. **Record the next checkpoint** (a date, or "after the appeal is
+   filed") so the next session picks this up instead of re-discovering
+   it from scratch.
+6. **Never create a replacement account, package name, or listing to
+   route around this.** Both stores treat a replacement opened while
+   the original is restricted as evasion — see "Never" in `SKILL.md`.
+
+Every row below in the normal ladder names: what the state looks like
+in each console, whether a live Apple/Google doc page confirms the
+exact on-screen wording (with the URL and the date it was read), and
+where it doesn't, that it doesn't — per the rule that nothing from a
+private, unwitnessed assumption gets presented as a confirmed fact.
 
 ## 1. No developer account
 
