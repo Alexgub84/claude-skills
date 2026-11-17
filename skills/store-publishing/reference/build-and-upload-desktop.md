@@ -45,12 +45,19 @@ the fact and harder to undo once submitted.
 own upload screen.** That's the documented default in this skill: no
 extra tool to install, no credential to set up beforehand, and it's
 what every stranger following this skill already has available the
-moment the account exists. This is a desktop/console step either way —
-the artifact's bytes never go through a browser-automation tool's
-file-attach call (see "Why a browser tool's file-attach is the wrong
-tool," below) — but "console" here means the actual Play Console /
-App Store Connect upload page in a real browser, driven by a human or
-by a connected browser tool, not an API call.
+moment the account exists.
+
+This is a human click, in both browser modes, with no exception — the
+same rule as every other mention of this in `SKILL.md`: **the artifact's
+bytes never go through a browser-automation tool's file-attach call**
+(see "Why a browser tool's file-attach is the wrong tool," below). With
+a browser tool connected, this is the one console action in this
+skill's whole flow that still gets handed to the human rather than
+clicked by the agent — the human opens the real Play Console / App
+Store Connect upload screen in their own browser and selects the file
+from disk themselves; the agent resumes driving everything around it
+(release notes, declarations, the rest of the release flow) once the
+file has landed.
 
 ### An automated upload is an optional upgrade, once named tools are set up
 

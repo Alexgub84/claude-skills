@@ -174,6 +174,11 @@ agent action — nothing else does either:
 - **Google Play's store-listing screenshots** — see
   `reference/screens-play-console.md` for why: the page carries no file
   input for them at all.
+- **The build artifact's own upload through the console's upload
+  screen** — the documented default upload route (see
+  `reference/build-and-upload-desktop.md`): a human selects the file in
+  the real console in either browser mode, the agent never does this
+  specific click even with a browser tool connected.
 
 **The presses that make a release live are not on this list.** "Start
 rollout," raising a staged rollout's percentage, "Submit for Review,"
