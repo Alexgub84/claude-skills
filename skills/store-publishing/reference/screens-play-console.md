@@ -51,16 +51,29 @@ accepting it.
   `SKILL.md`). — *agent* for attaching a file to a found input; *human*
   for producing the document and for any identity-document review step
   the console itself gates behind a human action.
-- **Personal-account closed-testing gate.** A personal account created
-  after 13 November 2023 needs a closed test with a minimum of 12 testers
-  held continuously for at least 14 days before Google grants production
-  access (https://support.google.com/googleplay/android-developer/answer/14151465
-  — read 2026-11-11). This is a one-time condition on reaching production
-  for that account, not a per-release requirement. Setting up the closed
-  test itself (track, tester list, release) is agent-drivable; waiting out
-  the 14 days is not something any mode speeds up. — *agent* for the
-  console mechanics, *human* in the sense that only time, not a click,
-  clears the gate.
+- **Personal-account closed-testing gate — per app, not per account.**
+  A personal account created after 13 November 2023 needs a closed test
+  with a minimum of 12 testers held continuously for at least 14 days,
+  **then applying for production access on that specific app's own
+  Dashboard** — Google's own instruction: "Open the Dashboard in Play
+  Console. Click Apply for production." Nothing on the live page says
+  this grant carries to a second app; **don't tell a developer shipping
+  their second app that this gate is already cleared** — each app goes
+  through its own closed test and its own production-access
+  application. Two more facts the page states, worth carrying forward:
+  **Production and Pre-registration both stay disabled** on an app
+  until its own gate is met, and an application **can come back needing
+  continued testing** — Google's own reasons are "having fewer than 12
+  opted-in testers or insufficient tester engagement during the testing
+  period" — with review "usually tak[ing] seven days or less, but can
+  occasionally take longer."
+  (https://support.google.com/googleplay/android-developer/answer/14151465
+  — read 2026-11-17.) Setting up the closed test itself (track, tester
+  list, release) and submitting the production-access application are
+  agent-drivable; waiting out the 14 days, and Google's own review of
+  the application, are not something any mode speeds up. — *agent* for
+  the console mechanics, *human* in the sense that only time, not a
+  click, clears the gate.
 
 ## Creating the app
 

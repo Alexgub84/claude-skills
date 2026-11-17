@@ -105,6 +105,12 @@ specifications page
   2732px (or the alternative 2064 x 2752px).
 - No alpha channel/transparency on any of them; minimum 1, maximum 10
   screenshots per device size.
+- **Coming in April 2027**: Apple's own page states, "Starting in April
+  2027, screenshots will be required for any app using the iOS 27.1
+  SDK or later" — the iPhone Duo sizes (1398 x 2034px outer display,
+  2007 x 2853px inner display, or their landscape equivalents). Not a
+  today requirement; flag it rather than skip it so a reader targeting
+  that SDK isn't surprised later.
 
 - **Required medium-display iPhone slot** — a real file input exists.
   Attach images one at a time through it. — *agent*

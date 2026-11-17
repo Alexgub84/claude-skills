@@ -687,12 +687,16 @@ a panicking developer sets up a worse decision than the truth would.
 
 - A personal Google Play developer account created after the policy
   cutoff must complete a closed test with a minimum tester count over a
-  minimum number of continuous days before Google grants production
-  access — see `reference/developer-account-setup.md` for the current
-  numbers and citation; a verified organisation account's status against
-  this gate is this skill's own inference, not a quoted exemption. This
-  is a one-time gate on reaching production, not a per-release
-  requirement.
+  minimum number of continuous days, **on each app individually**, then
+  apply for production access on that specific app's own Dashboard —
+  see `reference/developer-account-setup.md` for the current numbers
+  and citation; a verified organisation account's status against this
+  gate is this skill's own inference, not a quoted exemption. **This
+  clears per app, not per account** — a second app on the same account
+  runs its own closed test and its own application; never tell a
+  developer shipping a second app that this gate is already behind
+  them. Once an app clears it, later releases of that same app don't
+  repeat it.
 - Apple has no closed-testing gate like that, but requires the
   Individual or Organization developer account to belong to (or have
   explicit authorization from) the entity that owns the app's

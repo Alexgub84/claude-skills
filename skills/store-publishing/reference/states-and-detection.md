@@ -76,9 +76,17 @@ app or a broken page:
   production needs Admin, App Manager, or Release Manager. A
   Developer- or Marketer-role sign-in simply doesn't show these
   screens at all; it isn't a bug and it isn't state 1.
-- **Google Play**: an invited user without Admin (all permissions)
-  access won't see "Users and permissions," "API access," or some
-  financial screens, depending on what was granted.
+- **Google Play**: permissions are named precisely here too, not just
+  on Apple. Creating a new app needs the **account-level** permission
+  "Create, edit, and delete draft apps" (an invited user holding only
+  app-level permissions on existing apps won't see "Create app" at
+  all). Enrolling in Play App Signing or releasing to production needs
+  the **app-level** permission "Release to production, exclude
+  devices, and use Play App Signing." An invited user without "Admin
+  (all permissions)" also won't see "Users and permissions," "API
+  access," or some financial screens, depending on what was granted.
+  (https://support.google.com/googleplay/android-developer/answer/9844686?hl=en
+  — read 2026-11-17.)
 
 **If an expected screen or button isn't there, don't conclude the app
 or the account is missing — check the role first.** If the signed-in

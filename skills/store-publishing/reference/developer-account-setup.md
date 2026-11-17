@@ -36,16 +36,24 @@ mention at all.
 - **The 12-tester/14-day closed-testing gate** applies, by Google's own
   wording, to "personal developer accounts created after November 13,
   2023" — a minimum of 12 testers opted in continuously for at least 14
-  days before production access is granted
+  days, **then applying for production access on that specific app's
+  own Dashboard**
   (https://support.google.com/googleplay/android-developer/answer/14151465 —
-  read 2026-11-11). **On the organisation exemption specifically:** that
-  page never uses the word "exempt" for organisation accounts — it only
-  ever scopes the requirement to personal accounts. Treat "an
-  organisation account doesn't face this gate" as this skill's own
-  inference from that scoping (an organisation account is, by definition,
-  not a personal account created after that date), not as a sentence
-  Google's page states outright. If this matters for a real decision,
-  confirm current wording in-console before relying on the inference.
+  read 2026-11-17). **This is per app, not per account** — the live
+  page never says a granted application carries to a second app, so
+  don't tell a developer shipping their second app that the gate is
+  already cleared; each app runs its own closed test and its own
+  application. Full detail, including what stays disabled until the
+  gate clears and what can send an application back for continued
+  testing: `screens-play-console.md`. **On the organisation exemption
+  specifically:** that page never uses the word "exempt" for
+  organisation accounts — it only ever scopes the requirement to
+  personal accounts. Treat "an organisation account doesn't face this
+  gate" as this skill's own inference from that scoping (an
+  organisation account is, by definition, not a personal account
+  created after that date), not as a sentence Google's page states
+  outright. If this matters for a real decision, confirm current
+  wording in-console before relying on the inference.
 
 ### What to do, in order
 
@@ -64,16 +72,19 @@ interchangeable steps; the gate sits after both.
 3. The account is verified — state 3 begins. Create the app record (see
    `screens-play-console.md`), then walk it through to a build uploaded
    for testing (states 4 and 5 in `states-and-detection.md`).
-4. **If a personal account**: open a closed test on that app, with the
-   minimum tester count opted in continuously for the required number of
-   days before production access is granted
-   (https://support.google.com/googleplay/android-developer/answer/14151465
-   — read 2026-11-11, cited above). Setting up the track, the tester list
-   and the release is agent-drivable; clearing the continuous-days
+4. **If a personal account**: open a closed test on **this specific
+   app**, with the minimum tester count opted in continuously for the
+   required number of days. Setting up the track, the tester list and
+   the release is agent-drivable; clearing the continuous-days
    requirement is a matter of time, not a click.
-5. Once the gate clears, apply for production access for that app — a
-   one-time condition per Google's own wording, not a per-release
-   requirement.
+5. **Apply for production access on this app's own Dashboard** — not an
+   account-wide switch; a second app repeats steps 4 and 5 on its own,
+   even on the same account. Google's own review of the application
+   "usually takes seven days or less," and can send the app back for
+   continued testing if fewer than 12 testers stayed opted in or
+   engagement was judged insufficient. See "The 12-tester/14-day
+   closed-testing gate," above, and `screens-play-console.md` for the
+   full citation.
 
 ### EU trader-status declaration (Play Console → Account details)
 
