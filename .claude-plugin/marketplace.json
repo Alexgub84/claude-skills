@@ -8,7 +8,7 @@
     {
       "name": "claude-skills",
       "source": "./",
-      "description": "Store publishing (Google Play + Apple App Store) and Meta WhatsApp Cloud API setup, as two installable Claude Code skills."
+      "description": "Store publishing (Google Play + Apple App Store), Meta WhatsApp Cloud API setup, and putting a test suite on an AI-built app, as three installable Claude Code skills."
     }
   ]
 }

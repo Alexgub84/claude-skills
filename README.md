@@ -1,11 +1,13 @@
 # claude-skills
 
-Two Claude Code skills, published by [Hand in Hand AI](https://handinhandai.com):
+Three Claude Code skills, published by [Hand in Hand AI](https://handinhandai.com):
 
 - **store-publishing** — getting an app into Google Play and the Apple App
   Store, first submission and every repeat release after that.
 - **meta-whatsapp-cloud-api** — getting a business verified with Meta and
   connected to the official WhatsApp Cloud API.
+- **test-an-ai-built-app** — putting a working test suite on an app that was
+  built with AI and now breaks whenever it is touched.
 
 Both are rewrites of real, working procedures, generalized so they carry
 no client name, account, product, or machine-specific path. Each
@@ -22,6 +24,7 @@ downloadable ZIP, built by this repo's own release workflow from the
 
 - [store-publishing.zip](https://github.com/Alexgub84/claude-skills/releases/latest/download/store-publishing.zip)
 - [meta-whatsapp-cloud-api.zip](https://github.com/Alexgub84/claude-skills/releases/latest/download/meta-whatsapp-cloud-api.zip)
+- [test-an-ai-built-app.zip](https://github.com/Alexgub84/claude-skills/releases/latest/download/test-an-ai-built-app.zip)
 
 The downloaded file uploads as is in Claude's **Customize → Skills → Upload a
 skill**. An installed copy does not update itself — it stays exactly as it
@@ -76,7 +79,25 @@ Then install either or both skills from the marketplace it adds.
   (`screens-developer-console.md`), and the underlying Graph API calls
   with example `curl` commands (`api-checks.md`).
 
-Both skills are valid against the open [Agent Skills
+- `skills/test-an-ai-built-app/SKILL.md` — for a project with no tests at
+  all. It reads the project's real state first (stack, any existing test
+  runner, where the database is, where the model is called), then runs a
+  fixed order: make a suite exist and watch it go green, open one dependency
+  seam, fake exactly one thing — the model call — behind a real client and a
+  scripted fake that throws on an unscripted call, give every run its own
+  real disposable database created and dropped by the run, write the first
+  end-to-end test on one real flow, and start the run so it cannot lie. It
+  needs no browser; with a shell attached it runs the commands, otherwise it
+  narrates them one at a time. Its `reference/` folder carries the model port
+  with its real client and scripted fake in full (`model-port.md`), the
+  database create/migrate/run/drop lifecycle and both naming schemes
+  (`disposable-database.md`), the clock rule with its lint guard and single
+  sanctioned exception module (`clock-and-time.md`), five failure modes that
+  make a run look green while proving nothing (`traps.md`), and the three
+  phone-app tiers with an honest account of what no automated tier catches
+  (`phone-app.md`).
+
+All three skills are valid against the open [Agent Skills
 specification](https://agentskills.io/specification) (read live on
 2026-11-10). The version and the date each skill was last walked against
 the real console live in that spec's optional `metadata` field — a map of
