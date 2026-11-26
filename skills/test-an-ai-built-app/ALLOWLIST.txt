@@ -1,0 +1,248 @@
+# ALLOWLIST for skills/test-an-ai-built-app
+#
+# Deny by default: every proper noun, host, URL, number, path, email and
+# money word in this skill must appear below, or the scrub fails. Each group
+# carries the reason it is allowed to be public. Nothing here names a
+# client, a product, an account, a machine, a person or a private path.
+
+# --- The one public URL this skill carries (the provenance line requires
+# --- an issues link, and this repository is public by design).
+https://github.com/Alexgub84/claude-skills/issues
+
+# --- Invented file paths in the generic example project. None of these
+# --- exists in any real repository; they are the shape a reader creates.
+src/ai/types.ts
+src/ai/real.ts
+src/ai/fake.ts
+src/app.ts
+src/deps.ts
+src/index.ts
+src/intake/classify.ts
+scripts/run-tests.ts
+test/intake/classify.test.ts
+test/intake/store.test.ts
+test/support/app.ts
+test/support/fixed-instant.ts
+test/support/real-clock.ts
+./types.ts
+./app.ts
+./config.ts
+./db.ts
+./ai/real.ts
+../ai/types.ts
+../../src/ai/fake.ts
+../../src/app.ts
+../../src/intake/classify.ts
+playwright.config.ts
+process.env
+
+# --- This skill's own reference files, linked from SKILL.md.
+reference/model-port.md
+reference/disposable-database.md
+reference/clock-and-time.md
+reference/traps.md
+reference/phone-app.md
+clock-and-time.md
+disposable-database.md
+traps.md
+
+# --- Slash-separated phrases the path category reads as a path.
+Dart/Flutter
+create/migrate/run/drop
+yes/no
+
+# --- Public package and library names, and the symbols their own public
+# --- documentation uses. No private package appears in this skill.
+"@ai-sdk/anthropic"
+AnthropicProvider
+Schema
+Date
+ESLint
+Playwright
+Patrol
+Maestro
+Vitest
+NodeJS
+Signals
+Promise
+Error
+Sql
+SQLite
+MySQL
+MariaDB
+ORM
+REST
+HTTP
+SDK's
+Protocol
+Expo
+Flutter
+Dart
+React
+Native
+JavaScript
+TypeScript
+Python
+Go
+Ruby
+PHP
+Java
+CI
+NewExpression
+CallExpression
+callee.object.name
+callee.property.name
+
+# --- Type and function names invented for this skill's generic example.
+AiClient
+FakeAiClient
+AppDeps
+ModelRequest
+ModelResponse
+RecordedCall
+ScriptedEntry
+QueueEntry
+Classification
+Queue
+Database
+DATABASE
+TEST
+FORCE
+BASE
+TABLE
+HEAD
+PORT
+SIGINT
+SIGTERM
+THROWS
+Fake
+Injected
+Injection
+ONE
+
+# --- A local address in an example config. Not a real host anywhere.
+http://localhost:${PORT}
+$
+
+# --- Numbers in the generic example: port range and hash width in the
+# --- port-derivation snippet, slice widths in the name helper, an HTTP
+# --- status code in a test-name example, the 2026 provenance year, and
+# --- hour/date fragments inside quoted example timestamps.
+4400
+1000
+256
+32
+24
+201
+2026
+23
+12
+11
+10
+00
+01
+03
+
+# --- Ordinary English words the checker reads as names because they open a
+# --- sentence, a table cell or a heading in this file, and their lower-case
+# --- form happens not to appear in the same file. None is a proper noun.
+# --- "Hand" is "Hand back", the name of the last step: ordinary English.
+Hand
+Step
+Steps
+Trap
+The
+An
+If
+One
+Two
+Either
+What
+Which
+Whether
+Whatever
+Nothing
+Everything
+Something
+Elsewhere
+Never
+Open
+Optional
+Output
+Pass
+Passes
+Fails
+Proof
+Prove
+Production
+Providers
+Reads
+Replacing
+Reuses
+Rewrite
+Scoped
+Sends
+Short
+Slow
+Speed
+Start
+State
+Time
+Total
+Target
+Terminate
+Trigger
+Used
+Variants
+Write
+Make
+Match
+Move
+Migrating
+Migrations
+Mixing
+Logic
+Looks
+Languages
+Installing
+Plugging
+Pin
+Pixels
+Parallel
+Naming
+Needs
+Give
+Generate
+Half
+Fine
+Explicitly
+Empty
+Drive
+Derive
+Derived
+Delivery
+Decide
+Commit
+Cloning
+Changelog
+Category
+Budget
+Assertions
+Airplane
+AI-built
+
+# --- Money words appearing only in the generic example request text ("I
+# --- was charged twice") and in a sentence about what a suite costs. No
+# --- price, rate or amount of money appears anywhere in this skill.
+charged
+paid
+
+# --- Invented tokens inside the one example phone-app flow file: the flow's
+# --- own path, a documentation-reserved bundle id, and a German phrase
+# --- showing a two-language assertion.
+maestro/submit-request.yaml
+com.example.intake
+Anfrage
+LanguageModel
+Whichever
+Literally

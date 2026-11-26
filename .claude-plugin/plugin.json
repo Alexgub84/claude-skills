@@ -1,8 +1,8 @@
 {
   "name": "claude-skills",
-  "displayName": "Store Publishing & Meta WhatsApp Cloud API",
+  "displayName": "Store Publishing, Meta WhatsApp Cloud API & Testing an AI-built App",
   "version": "0.1.0",
-  "description": "Two installable procedures: get an app into Google Play and the Apple App Store, and get a business verified with Meta and connected to the official WhatsApp Cloud API.",
+  "description": "Three installable procedures: get an app into Google Play and the Apple App Store, get a business verified with Meta and connected to the official WhatsApp Cloud API, and put a working test suite on an app built with AI that breaks whenever it is touched.",
   "author": {
     "name": "Hand in Hand AI",
     "url": "https://handinhandai.com"
@@ -16,6 +16,9 @@
     "mobile-release",
     "meta",
     "whatsapp-cloud-api",
-    "business-verification"
+    "business-verification",
+    "testing",
+    "end-to-end-tests",
+    "test-automation"
   ]
 }
